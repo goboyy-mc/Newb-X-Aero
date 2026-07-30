@@ -33,8 +33,8 @@
 #define NL_EXPOSURE 1.15              // [toggle] 0.5 dark ~ 3.0 bright
 #define NL_SATURATION 1.15            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
-#define NL_TINT_LOW  vec3(0.56,0.73,1.28) // color tint for dark tone
-#define NL_TINT_HIGH vec3(1.18,0.86,0.62) // color tint for light tone
+#define NL_TINT_LOW  vec3(0.48,0.68,1.22) // color tint for dark tone
+#define NL_TINT_HIGH vec3(0.92,0.97,1.08) // color tint for light tone
 
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
@@ -50,7 +50,7 @@
 
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.00,0.55,0.22)
-#define NL_NOON_SUNLIGHT_COL   vec3(1.00,0.93,0.62)
+#define NL_NOON_SUNLIGHT_COL   vec3(0.96,0.98,1.00)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.05,0.08,0.26)
 
 /* Torch colors */
@@ -74,9 +74,9 @@
 #define NL_DAWN_ZENITH_COL   vec3(0.22,0.34,0.90)
 #define NL_DAWN_HORIZON_COL  vec3(2.70,0.68,0.34)
 #define NL_DAWN_EDGE_COL     vec3(1.90,0.78,1.00)
-#define NL_DAY_ZENITH_COL    vec3(0.42,1.10,2.35)
-#define NL_DAY_HORIZON_COL   vec3(0.95,1.70,2.05)
-#define NL_DAY_EDGE_COL      vec3(1.18,1.55,1.90)
+#define NL_DAY_ZENITH_COL    vec3(0.22,0.78,2.18)
+#define NL_DAY_HORIZON_COL   vec3(0.78,1.38,1.88)
+#define NL_DAY_EDGE_COL      vec3(1.02,1.20,1.42)
 #define NL_NIGHT_ZENITH_COL  vec3(0.010,0.030,0.080)
 #define NL_NIGHT_HORIZON_COL vec3(0.028,0.050,0.110)
 #define NL_NIGHT_EDGE_COL    vec3(0.055,0.075,0.130)
@@ -116,10 +116,10 @@
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.35         // 0.0 dark ~ 3.0 bright
-#define NL_CAUSTIC_INTENSITY 2.20             // 0.5 weak ~ 5.0 bright
+#define NL_CAUSTIC_INTENSITY 2.00             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.08               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.20            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.98,1.00,0.99) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.92,0.98,0.94) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 1 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
@@ -282,4 +282,3 @@
 #endif
 
 #endif
-
