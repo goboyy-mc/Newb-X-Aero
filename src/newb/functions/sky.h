@@ -145,8 +145,8 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   g *= g;
 
   vec3 sky = mix(zenithCol, horizonCol, f*f);
-  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(2.0,0.5,0.0);
-  sky += 0.25*streaks*spectrum(sin(2.0*viewDir.x*viewDir.y+t));
+  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(0.45,0.35,1.05);
+  sky += 0.08*streaks*vec3(0.50, 0.45, 1.10);
 
   return sky;
 }
