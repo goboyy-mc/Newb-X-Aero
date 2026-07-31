@@ -2,19 +2,19 @@
   "format_version": "1.16.100",
   "minecraft:fog_settings": {
     "description": {
-      "identifier": "newb:fog_the_end"
+      "identifier": "aero:fog_the_end"
     },
     "distance": {
       "air": {
         "fog_start": 0.92,
         "fog_end": 1.0,
-        "fog_color": "#400040",
+        "fog_color": "#3A3F8F",
         "render_distance_type": "render"
       },
       "water": {
         "fog_start": 0.0,
         "fog_end": 15.0,
-        "fog_color": "#62529e",
+        "fog_color": "#5A7FD8",
         "render_distance_type": "fixed"
       }
     }
