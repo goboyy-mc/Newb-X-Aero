@@ -30,7 +30,7 @@
 /* Color correction */
 #define NL_TONEMAP_TYPE 4              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.42                  // 0.3 low ~ 2.0 high
-#define NL_EXPOSURE 1.10              // [toggle] 0.5 dark ~ 3.0 bright
+#define NL_EXPOSURE 1.00              // [toggle] 0.5 dark ~ 3.0 bright
 #define NL_SATURATION 1.12            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.55,0.72,1.28) // color tint for dark tone
@@ -39,8 +39,8 @@
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.28  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     0.82  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   2.20  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_SHADOW_INTENSITY     0.90  // 0.0 no shadow ~ 1.0 strong shadow
+#define NL_MIN_LIGHTING_BOOST   2.00  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 #define NL_BLINKING_TORCH  // [toggle] flickering light
 #define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -51,7 +51,7 @@
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.20,0.52,0.22)
 #define NL_NOON_SUNLIGHT_COL   vec3(0.88,0.95,1.15)
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.015,0.03,0.16)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.014,0.028,0.15)
 
 /* Torch colors */
 #define NL_OVERWORLD_TORCH_COL  vec3(1.00,0.48,0.18)
@@ -162,10 +162,10 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 0.60           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 0.35           // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.02 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.03    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.15    // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA_SCALE 0.05    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_WIDTH 0.08    // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(0.20,0.95,0.75)
 #define NL_AURORA_COL2 vec3(0.35,0.45,1.00)
 
@@ -177,8 +177,8 @@
 #define NL_SHOOTING_STAR_DELAY 52.0 // 0.0 no delay ~ 100.0 long time (100 secs)
 
 /* Galaxy */
-#define NL_GALAXY_STARS 1.40           // [toggle] 0.1 dim - 4.0 bright
-#define NL_GALAXY_VIBRANCE 0.90          // 0.0 white - 1.0 colorful
+#define NL_GALAXY_STARS 1.30           // [toggle] 0.1 dim - 4.0 bright
+#define NL_GALAXY_VIBRANCE 0.75          // 0.0 white - 1.0 colorful
 #define NL_GALAXY_SPEED 0.02            // 0.01 slow motion - 0.2 fast motion
 #define NL_GALAXY_DAY_VISIBILITY 0.0    // 0.0 invisible - 1.0 visible
 
