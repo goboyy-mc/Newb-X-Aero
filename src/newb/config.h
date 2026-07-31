@@ -259,7 +259,7 @@
   #undef NL_RAIN_MIST_OPACITY
 #endif
 
-//#ifdef CHUNK_ANIM
+#ifdef CHUNK_ANIM
   #define NL_CHUNK_LOAD_ANIM 100.0
 #endif
 
@@ -269,13 +269,13 @@
   #undef NL_CLOUD_SHADOW // TODO: Cloud shadow for rounded, realistic clouds
 #endif
 
-//#ifdef BOX_CLOUDS
+#ifdef BOX_CLOUDS
   #undef NL_CLOUD_TYPE
   #define NL_CLOUD_TYPE 0
   #undef NL_CLOUD_SHADOW
 #endif
 
-//#ifdef REALISTIC_CLOUDS
+#ifdef REALISTIC_CLOUDS
   #undef NL_CLOUD_TYPE
   #define NL_CLOUD_TYPE 3
   #undef NL_CLOUD_SHADOW
