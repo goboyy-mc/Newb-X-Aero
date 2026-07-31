@@ -29,17 +29,17 @@
 
 /* Color correction */
 #define NL_TONEMAP_TYPE 4              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
-#define NL_GAMMA 1.42                  // 0.3 low ~ 2.0 high
-#define NL_EXPOSURE 1.00              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.15            // [toggle] 0.0 grayscale ~ 4.0 super saturated
+#define NL_GAMMA 1.38                  // 0.3 low ~ 2.0 high
+#define NL_EXPOSURE 1.08              // [toggle] 0.5 dark ~ 3.0 bright
+#define NL_SATURATION 1.10            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
-#define NL_TINT_LOW  vec3(0.52,0.68,1.18) // color tint for dark tone
-#define NL_TINT_HIGH vec3(1.05,0.96,0.88) // color tint for light tone
+#define NL_TINT_LOW  vec3(0.82,0.90,1.04) // color tint for dark tone
+#define NL_TINT_HIGH vec3(1.03,0.99,0.94) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.35  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.28  // 0.5 weak ~ 3.0 bright
-#define NL_SHADOW_INTENSITY     0.90  // 0.0 no shadow ~ 1.0 strong shadow
+#define NL_SHADOW_INTENSITY     0.78  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   2.00  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 #define NL_BLINKING_TORCH  // [toggle] flickering light
 #define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
