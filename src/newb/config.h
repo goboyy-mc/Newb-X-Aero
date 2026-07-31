@@ -60,10 +60,10 @@
 #define NL_END_TORCH_COL        vec3(1.00,0.48,0.18)
 
 /* Fog */
-#define NL_FOG 0.60                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.06      // 0.0 no mist ~ 1.0 misty
-#define NL_RAIN_MIST_OPACITY 0.08 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
-#define NL_CLOUDY_FOG 0.03         // [toggle] 0.0 subtle - 0.8 dense fog clouds
+#define NL_FOG 0.35                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
+#define NL_MIST_DENSITY 0.02      // 0.0 no mist ~ 1.0 misty
+#define NL_RAIN_MIST_OPACITY 0.03 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
+#define NL_CLOUDY_FOG 0.01         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.42
