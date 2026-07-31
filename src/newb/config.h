@@ -33,7 +33,7 @@
 #define NL_EXPOSURE 0.95              // [toggle] 0.5 dark ~ 3.0 bright
 #define NL_SATURATION 1.12            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
-#define NL_TINT_LOW  vec3(0.55,0.72,1.28) // color tint for dark tone
+#define NL_TINT_LOW  vec3(0.52,0.68,1.18) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.05,0.96,0.88) // color tint for light tone
 
 /* Lighting */
@@ -51,7 +51,7 @@
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.20,0.52,0.22)
 #define NL_NOON_SUNLIGHT_COL   vec3(0.88,0.95,1.15)
-#define NL_NIGHT_MOONLIGHT_COL vec3(0.010,0.020,0.120)
+#define NL_NIGHT_MOONLIGHT_COL vec3(0.010,0.026,0.16)
 
 /* Torch colors */
 #define NL_OVERWORLD_TORCH_COL  vec3(1.00,0.48,0.18)
@@ -60,8 +60,8 @@
 #define NL_END_TORCH_COL        vec3(1.00,0.48,0.18)
 
 /* Fog */
-#define NL_FOG 0.72                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
-#define NL_MIST_DENSITY 0.10      // 0.0 no mist ~ 1.0 misty
+#define NL_FOG 0.68                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
+#define NL_MIST_DENSITY 0.08      // 0.0 no mist ~ 1.0 misty
 #define NL_RAIN_MIST_OPACITY 0.08 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
 #define NL_CLOUDY_FOG 0.05         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
@@ -74,14 +74,14 @@
 #define NL_DAWN_ZENITH_COL   vec3(0.26,0.36,0.90)
 #define NL_DAWN_HORIZON_COL  vec3(2.60,0.72,0.42)
 #define NL_DAWN_EDGE_COL     vec3(2.15,0.82,1.05)
-#define NL_DAY_ZENITH_COL    vec3(0.18,0.78,2.40)
-#define NL_DAY_HORIZON_COL   vec3(0.78,1.55,2.25)
-#define NL_DAY_EDGE_COL      vec3(1.22,1.48,1.92)
+#define NL_DAY_ZENITH_COL    vec3(0.22,0.76,2.20)
+#define NL_DAY_HORIZON_COL   vec3(0.88,1.52,2.05)
+#define NL_DAY_EDGE_COL      vec3(1.24,1.46,1.82)
 #define NL_NIGHT_ZENITH_COL  vec3(0.0015,0.0050,0.0200)
 #define NL_NIGHT_HORIZON_COL vec3(0.0060,0.0120,0.0350)
 #define NL_NIGHT_EDGE_COL    vec3(0.0150,0.0280,0.0550)
-#define NL_RAIN_ZENITH_COL   vec3(0.36,0.44,0.54)
-#define NL_RAIN_HORIZON_COL  vec3(0.50,0.56,0.64)
+#define NL_RAIN_ZENITH_COL   vec3(0.39,0.45,0.52)
+#define NL_RAIN_HORIZON_COL  vec3(0.52,0.57,0.62)
 
 #define NL_END_ZENITH_COL    vec3(0.10,0.02,0.24)
 #define NL_END_HORIZON_COL   vec3(0.52,0.16,0.84)
@@ -119,7 +119,7 @@
 #define NL_CAUSTIC_INTENSITY 2.20             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.08               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.20            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.82,0.98,1.00) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.86,0.98,0.99) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 1 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
