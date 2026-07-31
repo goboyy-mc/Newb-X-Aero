@@ -30,8 +30,8 @@
 /* Color correction */
 #define NL_TONEMAP_TYPE 4              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.42                  // 0.3 low ~ 2.0 high
-#define NL_EXPOSURE 0.95              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.12            // [toggle] 0.0 grayscale ~ 4.0 super saturated
+#define NL_EXPOSURE 1.00              // [toggle] 0.5 dark ~ 3.0 bright
+#define NL_SATURATION 1.15            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.52,0.68,1.18) // color tint for dark tone
 #define NL_TINT_HIGH vec3(1.05,0.96,0.88) // color tint for light tone
@@ -40,7 +40,7 @@
 #define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.28  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     0.90  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   1.80  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   2.00  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 #define NL_BLINKING_TORCH  // [toggle] flickering light
 #define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -162,10 +162,10 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 0.40           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 1.2           // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.02 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.028    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.10    // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA_SCALE 0.04    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_WIDTH 0.18    // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(0.28,0.82,0.58)
 #define NL_AURORA_COL2 vec3(0.36,0.52,0.88)
 
@@ -259,7 +259,7 @@
   #undef NL_RAIN_MIST_OPACITY
 #endif
 
-#ifdef CHUNK_ANIM
+//#ifdef CHUNK_ANIM
   #define NL_CHUNK_LOAD_ANIM 100.0
 #endif
 
@@ -269,13 +269,13 @@
   #undef NL_CLOUD_SHADOW // TODO: Cloud shadow for rounded, realistic clouds
 #endif
 
-#ifdef BOX_CLOUDS
+//#ifdef BOX_CLOUDS
   #undef NL_CLOUD_TYPE
   #define NL_CLOUD_TYPE 0
   #undef NL_CLOUD_SHADOW
 #endif
 
-#ifdef REALISTIC_CLOUDS
+//#ifdef REALISTIC_CLOUDS
   #undef NL_CLOUD_TYPE
   #define NL_CLOUD_TYPE 3
   #undef NL_CLOUD_SHADOW
