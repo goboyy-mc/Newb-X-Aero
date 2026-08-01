@@ -186,8 +186,8 @@
 //#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
-#define NL_SUN_SIZE  1.8           // 0.3 tiny ~ 4.0 massive
-#define NL_MOON_SIZE 1.8           // 0.3 tiny ~ 4.0 massive
+#define NL_SUN_SIZE  1.08           // 0.3 tiny ~ 4.0 massive
+#define NL_MOON_SIZE 1.08           // 0.3 tiny ~ 4.0 massive
 #define NL_SUN_PATH_YAW    20.0 //
 #define NL_MOON_PATH_YAW   20.0 //
 #define NL_SUN_PATH_TILT   32.0 //
