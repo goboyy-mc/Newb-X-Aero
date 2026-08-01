@@ -22,8 +22,8 @@ void lanternWave(
   if (uv1.x > 0.6 && (isChain || isLantern)) {
     // simple wave for angle
     float phase = dot(floor(cPos), vec3_splat(0.3927));
-    vec2 theta = vec2(t + phase, t*1.4 + phase);
-    theta = sin(vec2(theta.x,theta.x+0.7)) + rainFactor*sin(vec2(theta.y,theta.y+0.7));
+    vec2 theta = vec2(t + phase, t*1.25 + phase);
+    theta = sin(vec2(theta.x, theta.x + 0.6)) + rainFactor*0.8*sin(vec2(theta.y, theta.y + 0.6));
     theta *= NL_LANTERN_WAVE*windStrength;
 
     vec2 sinA = sin(theta);
@@ -100,13 +100,13 @@ void nlWave(
   bool isLeafLitter = bPos.y==0.015625 && (bPosH.x+bPosH.y)==0.0;
   bool shouldWave = ((isTreeLeaves || isPlants || isVines) && isColored && !isLeafLitter) || (isFarmPlant && isTop);
 
-  float windStrength = lit.y*(noise1D(t*0.36) + rainFactor*0.4)*(1.0-waveFade);
+  float windStrength = lit.y*(0.9*noise1D(t*0.32) + rainFactor*0.35)*(1.0-waveFade);
 
   // darken farm plants bottom
-  light *= isFarmPlant && !isTop ? 0.7 : 1.1;
+  light *= isFarmPlant && !isTop ? 0.75 : 1.08;
   if (isColored && !isTreeLeaves && !isLeafLitter && uv0.y>0.214 && uv0.y<0.502 && !isRedStone) {
     // make grass bottom more dark depending how deep it is
-    light *= mix(isTop ? 1.2 : 1.2 - 1.2*(bPos.y>0.0 ? 1.5-bPos.y : 0.5), 1.0, waveFade);
+    light *= mix(isTop ? 1.15 : 1.15 - 1.05*(bPos.y>0.0 ? 1.5-bPos.y : 0.5), 1.0, waveFade);
   }
 
   #ifdef NL_PLANTS_WAVE
@@ -119,7 +119,7 @@ void nlWave(
       float wave = NL_PLANTS_WAVE*windStrength;
 
       if (isTreeLeaves) {
-        wave *= 0.5;
+        wave *= 0.55;
       } else if (isVines) {
         wave *= fract(0.01+tiledCpos.y*0.5);
       } else if (isPlants && isColored && !isTop) {
@@ -131,7 +131,7 @@ void nlWave(
       float phaseDiff = dot(cPos,vec3_splat(PI_QUART)) + fastRand(tiledCpos.xz + tiledCpos.y);
       wave *= 1.0 + mix(
         sin(t*NL_WAVE_SPEED + phaseDiff),
-        sin(t*NL_WAVE_SPEED*1.5 + phaseDiff),
+        sin(t*NL_WAVE_SPEED*1.35 + phaseDiff),
         rainFactor);
 
       //worldPos.y -= 1.0-sqrt(1.0-wave*wave);

@@ -15,7 +15,7 @@ float noise1D(highp float x) {
   float x0 = floor(x);
   float t0 = x-x0;
   t0 *= t0*(3.0-2.0*t0);
-  return mix(fract(sin(x0)*84.85), fract(sin(x0+1.0)*84.85), t0);
+  return mix(fract(sin(x0)*92.0), fract(sin(x0+1.0)*92.0), t0);
 }
 
 // simpler rand
@@ -25,8 +25,8 @@ float fastRand(vec2 n){
 
 // used by caustic
 float disp(vec3 pos, float t) {
-  float n = sin(8.0*PI_HALF*(pos.x+pos.y*pos.z) + 0.7*t);
-  pos.y += t + 0.8*n;
+  float n = sin(7.2*PI_HALF*(pos.x+pos.y*pos.z) + 0.6*t);
+  pos.y += t + 0.7*n;
   float p = floor(pos.y);
   return (0.8+0.2*n) * mix(fastRand(pos.xz+p), fastRand(pos.xz+p+1.0), pos.y - p);
 }
@@ -84,8 +84,8 @@ float movingNoise2D(vec2 pos, float t, float f) {
   vec2 tpos = 16.0*fract(pos/16.0);
   float nf0 = fastVoronoi2(0.125*pos.xy, 12.0);
   float nf2 = fastVoronoi2(0.04*pos.xy*vec2(0.5,1.0) + 0.5*nf0 + 0.05*t, 2.0);
-  float n0 = sin(1.5*nf0*nf0 + pos.x - sin(pos.y) + t);
-  float n1 = sin(0.05*(pos.x+pos.y) + 8.0*nf2 + 0.4*t);
+  float n0 = sin(1.35*nf0*nf0 + pos.x - sin(pos.y) + t);
+float n1 = sin(0.05*(pos.x+pos.y) + 7.2*nf2 + 0.35*t);
   return mix(n0*n0, n1*n1, f);
 }
 

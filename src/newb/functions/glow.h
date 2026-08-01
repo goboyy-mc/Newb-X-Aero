@@ -10,7 +10,7 @@ vec3 glowDetect(vec4 diffuse) {
   if (diffuse.a > 0.988 && diffuse.a < 0.993) {
     vec3 glow = diffuse.rgb * diffuse.rgb;
     if (diffuse.a > 0.989) {
-      return 0.4 * glow;
+      return 0.48 * glow;
     }
     return glow;
   }
@@ -71,7 +71,7 @@ vec3 nlGlow(sampler2D tex, vec2 uv, float shimmer) {
     g = max(g, max(max(c2*v.x, c4*u.y), max(c6*u.x, c8*v.y)));
 
     // apply attuenation and add to glow
-    g = ((g*0.7 + 0.2)*g + 0.1)*g;
+    g = ((g*0.65 + 0.15)*g + 0.08)*g;
     glow = max(glow, g*NL_GLOW_LEAK);
   #endif
 
@@ -84,8 +84,8 @@ vec3 nlGlow(sampler2D tex, vec2 uv, float shimmer) {
 
 #ifdef NL_GLOW_SHIMMER
 float nlGlowShimmer(vec3 cPos, float t) {
-  float shimmer = sin(0.7*dot(cPos, vec3(1.0, 1.0, 1.0)) - NL_GLOW_SHIMMER_SPEED*t);
-  shimmer = sin(1.2*shimmer + 0.7*dot(cPos, vec3(-1.0, -1.0, 1.0)));
+  float shimmer = sin(0.65*dot(cPos, vec3(1.0, 1.0, 1.0)) - NL_GLOW_SHIMMER_SPEED*t);
+  shimmer = sin(1.05*shimmer + 0.7*dot(cPos, vec3(-1.0, -1.0, 1.0)));
   shimmer *= shimmer;
   return mix(1.0, shimmer*shimmer, NL_GLOW_SHIMMER);
 }
@@ -99,8 +99,8 @@ vec4 nlGlint(vec4 light, vec4 layerUV, sampler2D glintTexture, vec4 glintColor, 
 
   vec4 glint = (tex1*tex1 + tex2*tex2) * tileLightColor * glintColor;
 
-  light.rgb = light.rgb*(1.0-0.4*glint.a) + 80.0*glint.rgb;
-  light.rgb += vec3(0.1,0.0,0.1) + 0.2*spectrum(sin(layerUV.x*9.42477 + 2.0*glint.a + d));
+  light.rgb = light.rgb*(1.0-0.45*glint.a) + 88.0*glint.rgb;
+  light.rgb += vec3(0.08,0.02,0.10) + 0.16*spectrum(sin(layerUV.x*9.42477 + 2.0*glint.a + d));
 
   return light;
 }

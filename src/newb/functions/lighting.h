@@ -37,7 +37,7 @@ vec3 nlLighting(
   float torchAttenuation = (NL_TORCHLIGHT_INTENSITY*uv1.x)/(0.5-0.45*lit.x);
 
   #ifdef NL_BLINKING_TORCH
-    torchAttenuation *= 1.0 - 0.19*noise1D(t*8.0);
+    torchAttenuation *= 1.0 - 0.15*noise1D(t*6.5);
   #endif
 
   vec3 torchLight = torchColor*torchAttenuation;
@@ -69,7 +69,7 @@ vec3 nlLighting(
     // shadow cast by sun light
     float shadow = step(0.93, uv1.y);
     shadow = max(shadow, (1.0 - NL_SHADOW_INTENSITY + (0.6*NL_SHADOW_INTENSITY*nightIntensity))*lit.y);
-    shadow *= shade > 0.8 ? 1.0 : 0.8;
+    shadow *= shade > 0.8 ? 1.0 : 0.86;
     #ifdef NL_CLOUD_SHADOW
       // shadow cast by simple clouds
       vec3 mainLightDir = env.sunDir.y > 0.0 ? env.sunDir : env.moonDir;
@@ -102,11 +102,11 @@ vec3 nlLighting(
   }
 
   // darken at crevices
-  light *= COLOR.g > 0.35 ? 1.0 : 0.8;
+  light *= COLOR.g > 0.35 ? 1.0 : 0.88;
 
   // brighten tree leaves
   if (isTree) {
-    light *= 1.25;
+    light *= 1.30;
   }
 
   return light;
@@ -157,7 +157,7 @@ vec3 nlEntityLighting(nl_skycolor skycol, nl_environment env, vec3 pos, vec4 nor
     // direct light from top
     light = (NL_SUNLIGHT_INTENSITY*l*sunLightAttenuation)*sunLightTint(env.dayFactor, env.rainFactor);
     vec3 N = normalize(mul(world, normal)).xyz;
-    light *= 0.9 + max(N.y, 0.0);
+    light *= 0.95 + max(N.y,0.0);
 
     // sky ambient
     lum = luminance(light);

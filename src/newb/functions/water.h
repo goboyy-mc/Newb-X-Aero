@@ -54,7 +54,7 @@ vec4 nlWater(
 
   // mask sky reflection under shade
   if (!env.end) {
-    waterRefl *= 0.05 + lit.y*1.14;
+    waterRefl *= 0.04 + lit.y*0.98;
   }
 
   #ifdef NL_WATER_REFL_MASK
@@ -66,7 +66,7 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.22*NL_WATER_TINT*(1.0-0.8*fresnel);
+  color.rgb *= 0.26*NL_WATER_TINT*(1.0-0.75*fresnel);
   color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
 
   #ifdef NL_WATER_WAVE

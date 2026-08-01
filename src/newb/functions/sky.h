@@ -112,7 +112,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
     source *= source;
-    sky *= 1.0 + 15.0*source*(1.0-env.rainFactor);
+    sky *= 1.0 + 12.0*source*(1.0-env.rainFactor);
   }
 
   #ifdef NL_RAINBOW
@@ -120,7 +120,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     rainbowFade *= rainbowFade;
     rainbowFade *= mix(NL_RAINBOW_CLEAR, NL_RAINBOW_RAIN, env.rainFactor);
     rainbowFade *= 0.5+0.5*env.dayFactor;
-    sky += spectrum(24.2*(0.85-g.x))*rainbowFade*skyCol.horizon;
+    sky += spectrum(22.0*(0.84-g.x))*rainbowFade*skyCol.horizon*0.92;
   #endif
 
   return sky;
@@ -145,8 +145,8 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   g *= g;
 
   vec3 sky = mix(zenithCol, horizonCol, f*f);
-  sky += (0.1*streaks + 2.0*g*g*g + h*h*h)*vec3(0.45,0.35,1.20);
-  sky += 0.25*streaks*spectrum(sin(2.0*viewDir.x*viewDir.y+t));
+  sky += (0.08*streaks + 1.7*g*g*g + 0.8*h*h*h)*vec3(1.4,0.7,0.9);
+  sky += 0.18*streaks*spectrum(sin(1.8*viewDir.x*viewDir.y+t));
 
   return sky;
 }
@@ -209,7 +209,7 @@ vec3 nlRenderShootingStar(vec3 viewDir, vec3 FOG_COLOR, float t) {
   s *= 1.0-t0; // fade out
   s *= 0.7 + 16.0*g*g;
   s *= max(1.0-FOG_COLOR.r-FOG_COLOR.g-FOG_COLOR.b, 0.0); // fade out during day
-  return s*vec3(0.8, 0.9, 1.0);
+  return s*vec3(0.75, 0.95, 1.0);
 }
 
 // Galaxy stars - needs further optimization
@@ -247,9 +247,9 @@ vec3 nlRenderGalaxy(vec3 vdir, vec3 fogColor, nl_environment env, float t) {
   gf *= 1.0-0.2*smoothstep(0.3, 0.4, gfmask);
   gf *= 1.0-0.1*smoothstep(0.2, 0.1, gfmask);
   vec3 gfcol = normalize(vec3(n0, cos(2.0*vdir.y), sin(vdir.x+n0)));
-  stars += (0.4*gf + 0.012)*mix(vec3(0.5, 0.5, 0.5), gfcol*gfcol, NL_GALAXY_VIBRANCE);
+  stars += (0.34*gf + 0.010)*mix(vec3(0.55,0.60,0.65), gfcol*gfcol, NL_GALAXY_VIBRANCE);
 
-  stars *= mix(1.0, NL_GALAXY_DAY_VISIBILITY, env.dayFactor);
+  stars *= mix(1.0, NL_GALAXY_DAY_VISIBILITY*0.9, env.dayFactor);
 
   return stars*(1.0-env.rainFactor);
 }
