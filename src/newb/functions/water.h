@@ -66,7 +66,7 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.26*NL_WATER_TINT*(1.0-0.75*fresnel);
+  color.rgb *= 0.30*NL_WATER_TINT*(1.0-0.7*fresnel);
   color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
 
   #ifdef NL_WATER_WAVE
