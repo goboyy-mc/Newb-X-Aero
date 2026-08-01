@@ -29,15 +29,15 @@
 
 /* Color correction */
 #define NL_TONEMAP_TYPE 4              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
-#define NL_GAMMA 1.42                  // 0.3 low ~ 2.0 high
-#define NL_EXPOSURE 1.15              // [toggle] 0.5 dark ~ 3.0 bright
-#define NL_SATURATION 1.12            // [toggle] 0.0 grayscale ~ 4.0 super saturated
+#define NL_GAMMA 1.36                  // 0.3 low ~ 2.0 high
+#define NL_EXPOSURE 1.05              // [toggle] 0.5 dark ~ 3.0 bright
+#define NL_SATURATION 1.15            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(0.55,0.72,1.28) // color tint for dark tone
-#define NL_TINT_HIGH vec3(0.98,1.00,1.06) // color tint for light tone
+#define NL_TINT_HIGH vec3(0.94,0.98,1.02) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.10  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.28  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     0.52  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   2.18  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -204,7 +204,7 @@
 #define NL_GROUND_RAIN_PUDDLES 0.55 // 0.0 no puddles ~ 1.0 puddles
 
 /* Entity (Actor, ItemInHand) */
-#define NL_ENTITY_BRIGHTNESS     0.82 // 0.1 dark ~ 1.6 bright
+#define NL_ENTITY_BRIGHTNESS     0.70 // 0.1 dark ~ 1.6 bright
 #define NL_ENTITY_EDGE_HIGHLIGHT 0.26 // [toggle] 0.0 no highlight ~ 1.6 bright highlight
 
 /* Weather particles */
