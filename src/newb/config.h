@@ -60,7 +60,7 @@
 #define NL_END_TORCH_COL        vec3(1.00,0.55,0.20)
 
 /* Fog */
-#define NL_FOG 0.72                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
+#define NL_FOG 0.70                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
 #define NL_MIST_DENSITY 0.10      // 0.0 no mist ~ 1.0 misty
 #define NL_RAIN_MIST_OPACITY 0.08 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
 #define NL_CLOUDY_FOG 0.05         // [toggle] 0.0 subtle - 0.8 dense fog clouds
@@ -93,9 +93,9 @@
 #define NL_RAINBOW_RAIN  0.56 // 0.3 subtle ~ 1.0 bright during rain weather
 
 /* Ore glow intensity */
-#define NL_GLOW_TEX 2.55           // 0.4 weak ~ 8.0 bright
-#define NL_GLOW_SHIMMER 0.55       // [toggle] 0.1 subtle ~ 1.0 100% shimmer
-#define NL_GLOW_SHIMMER_SPEED 0.75 // 0.5 slow - 2.0 fast
+#define NL_GLOW_TEX 2.60           // 0.4 weak ~ 8.0 bright
+#define NL_GLOW_SHIMMER 0.60       // [toggle] 0.1 subtle ~ 1.0 100% shimmer
+#define NL_GLOW_SHIMMER_SPEED 0.80 // 0.5 slow - 2.0 fast
 //#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
 /* Waving */
@@ -112,14 +112,14 @@
 #define NL_WATER_TEX_OPACITY 0.12  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 #define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.18,1.00,0.88)
+#define NL_WATER_TINT vec3(0.05,1.00,0.90)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.55         // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 2.35             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.06               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.35            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.80,1.00,0.92) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.68,1.00,0.90) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 1 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
@@ -162,7 +162,7 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 0.20           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 0.4           // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.015 // 0.0 static ~ 0.3 very fast
 #define NL_AURORA_SCALE 0.030    // 0.002 large ~ 0.4 tiny
 #define NL_AURORA_WIDTH 0.08    // 0.04 thin line ~ 0.4 thick lines
@@ -186,8 +186,8 @@
 //#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
-#define NL_SUN_SIZE  1.10           // 0.3 tiny ~ 4.0 massive
-#define NL_MOON_SIZE 1.10           // 0.3 tiny ~ 4.0 massive
+#define NL_SUN_SIZE  1.8           // 0.3 tiny ~ 4.0 massive
+#define NL_MOON_SIZE 1.8           // 0.3 tiny ~ 4.0 massive
 #define NL_SUN_PATH_YAW    20.0 //
 #define NL_MOON_PATH_YAW   20.0 //
 #define NL_SUN_PATH_TILT   32.0 //
