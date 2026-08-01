@@ -1,143 +1,185 @@
-# Newb X Legacy
+# Newb X Aero
 
-**Newb X Legacy** is a RenderDragon successor to the legacy GLSL shader, [Newb Shader](https://github.com/devendrn/newb-shader-mcbe). It is an enhanced vanilla shader that focuses on being lightweight and having soft aesthetics. It supports Minecraft Bedrock 1.26+ (Windows/Android/iOS).
+> A lightweight cinematic RenderDragon shader for Minecraft Bedrock Edition.
 
-<br>
+Newb X Aero is an enhanced vanilla RenderDragon shader for Minecraft Bedrock Edition that brings a clean, cinematic, and immersive visual experience while maintaining lightweight performance. Built upon the Newb Shader base, it refines Minecraft's original atmosphere with improved lighting, atmospheric effects, beautiful skies, crystal-clear water, and balanced colors without losing the vanilla feel.
 
-![Screenshots](docs/screenshots.jpg "Newb X Legacy 15.47, MCBE 1.21.0")
+Whether you're exploring, building, surviving, or creating cinematic screenshots, Newb X Aero delivers a polished visual experience while remaining optimized for everyday gameplay.
 
-## Downloads
+**Supported Platforms**
+- ✅ Android
+- ✅ Windows
+- ✅ Linux (x86_64)
+- ✅ iOS
 
-You can download the shader pack from [release page](https://github.com/devendrn/newb-x-mcbe/releases/latest).
+---
 
-## Installation
+# Features
 
-> [!NOTE]
-> Shaders are not officially supported on Minecraft Bedrock. The following are unofficial ways to load shaders. There are multiple ways to get it working. Start with the recommended method. If that doesn't work try the other method.
+## ☀️ Lighting
+- Cinematic sunlight and ambient lighting.
+- Soft and natural shadows.
+- Warm torch and lantern illumination.
+- Enhanced emissive blocks.
+- Balanced exposure and color grading.
+- Smooth day and night transitions.
 
-### Android
+## ☁️ Sky & Atmosphere
+- Dynamic sky colors.
+- Beautiful sunrise and sunset.
+- Improved moon and star rendering.
+- Enhanced End sky.
+- Thin atmospheric fog.
+- Better horizon blending.
+- Soft cloud rendering.
+- Box Clouds subpack.
 
-| **Using MB Loader App** |
-|:-|
-| 1. Install [MB Loader App](https://play.google.com/store/apps/details?id=io.github.bambosan.mbloader) |
-| 2. Launch Minecraft from MB Loader. |
-| 2. Import the resource pack and activate it in global resources. |
+## 🌊 Water
+- Crystal-clear water.
+- Aqua water color.
+- Gentle animated waves.
+- Subtle water reflections.
+- Improved underwater visibility.
+- Enhanced underwater atmosphere.
 
-### Windows
+## 🌧️ Weather
+- Improved rain visuals.
+- Better storm ambience.
+- Smooth weather transitions.
+- Refined rainy-day lighting.
 
-| **Using Wyvern Loader** |
-|:-|
-| 1. Download and setup Wyvern from [here](https://github.com/mcbegamerxx954/wyvern_releases/releases/latest) |
-| 2. Open Minecraft then click 'Inject' in Wyvern |
-| 3. Import the resource pack and activate it in global resources. |
+## 🌿 Nature
+- Animated grass.
+- Waving leaves.
+- Moving crops.
+- Water surface animation.
+- Natural environmental movement.
 
-### Linux / Mac
-This method is for [mcpelauncher-manifest](https://minecraft-linux.github.io/).
+## ✨ Visual Effects
+- Enhanced vanilla color palette.
+- Cinematic color grading.
+- Improved bloom.
+- Better contrast.
+- Atmospheric fog blending.
+- Glow ores.
+- Improved enchanted item glint.
 
-| **Using MaterialBinLoader mod (Recommended): x86_64 arch** |
-|:-|
-| 1. Install [mcpelauncher-materialbinloader-mod](https://github.com/CrackedMatter/mcpelauncher-materialbinloader/releases/latest). |
-| 2. Import the resource pack and activate it in global resources. |
+## ⚡ Performance
+- Lightweight optimization.
+- Stable FPS.
+- Optimized for low-end and mid-range devices.
+- Smooth gameplay experience.
 
-| **Using shaders mod: x86_64, x86, arm64, arm arch** |
-|:-|
-| 1. Download [mcpelauncher-shadersmod](https://github.com/GameParrot/mcpelauncher-shadersmod/releases/latest). |
-| 2. Follow this [guide](https://faizul726.github.io/guides/shadersmodinstallation) to setup. |
+---
 
+# Installation
 
-### iOS
-Using shaders on iOS is not very straightforward and not recommended for beginners.
+> **Disclaimer**
+>
+> Minecraft Bedrock Edition does not officially support RenderDragon shaders. Newb X Aero requires a compatible shader loader depending on your platform.
 
-| **Using Minecraft with Hynis** |
-|:-|
-| 1. Download Minecraft with Hynis IPA file from our [Discord server](https://discord.com/invite/newb-community-844591537430069279). |
-| 2. Sideload it with your preferred sideloading tool. |
-| 3. Import the resource pack and activate it in global resources. |
+## Android
 
-<br>
+1. Install **[MB Loader](https://play.google.com/store/apps/details?id=io.github.bambosan.mbloader)**.
+2. Launch Minecraft using **MB Loader**.
+3. Import the **Newb X Aero** resource pack.
+4. Enable it in **Settings → Global Resources**.
+5. Restart Minecraft if the shader does not load immediately.
 
-## Building
+---
 
-### Install dependencies
-- [Git](https://git-scm.com/)
-- [Python](https://www.python.org/) 3.11 or higher required
-- Python packages:
-  - [lazurite](https://veka0.github.io/lazurite/#installation) (Must be `v0.8.4`. Newer or older version may not be supported)
-  - [rich](https://rich.readthedocs.io/en/stable/introduction.html#installation) (Must be `v14.x.x`)
+## Windows
 
-### Get source code
-```
-git clone https://github.com/devendrn/newb-x-mcbe/ -c core.symlinks=true
-cd newb-x-mcbe
-```
+1. Download and install **[BetterRenderDragon](https://github.com/QYCottage/BetterRenderDragon)**.
+2. Follow the installation guide provided by BetterRenderDragon.
+3. Import the **Newb X Aero** resource pack.
+4. Enable it in **Settings → Global Resources**.
+5. Restart Minecraft.
 
-### Install dependencies from requirements.txt
-*Skip if you already have installed those versions.*
-```
-python -m pip install -r requirements.txt
-```
+---
 
-### Setup build environment
-> [!NOTE]
-> On Windows, run `.\build.bat` instead of `./build.sh` for all following commands.
-```
-./build.sh setup
-```
-This will download shaderc binary and material data required to build shader.
+## Linux (x86_64)
 
-<br>
+> For **mcpelauncher-manifest** users only.
 
-### Compile specific shader materials
-```
-./build.sh mats
-```
-Compiled material.bin files will be inside `build/<platform>/`
+1. Install **mcpelauncher-materialbinloader-mod** from the mcpelauncher project.
+2. Import the **Newb X Aero** resource pack.
+3. Enable it in **Settings → Global Resources**.
+4. Restart Minecraft if necessary.
 
-**Command usage:**
-```
-usage: build mats [-h] [-p {android,windows,merged,ios}] [-m M [M ...]] [-s S]
+---
 
-options:
-  -h, --help            show this help message and exit
-  -p {android,windows,merged,ios}
-                        build profile
-  -m M [M ...]          build materials (eg: Sky)
-  -s S                  subpack config to use (eg: NO_WAVE)
-```
+## iOS
 
-### Compile and build full shader pack
-```
-./build.sh pack
-```
+> A compatible RenderDragon-enabled Minecraft client is required.
 
-The final mcpack will be inside `build/`.
+1. Install a compatible RenderDragon-enabled Minecraft client.
+2. Import the **Newb X Aero** resource pack.
+3. Enable it in **Settings → Global Resources**.
+4. Restart Minecraft if the shader is not applied.
 
-**Command usage:**
-```
-usage: build pack [-h] [-p {android,windows,merged,ios}] [--no-zip] [--no-label] [-v V]
+---
 
-options:
-  -h, --help            show this help message and exit
-  -p {android,windows,merged,ios}
-                        build profile
-  --no-zip              don't make archive
-  --no-label            don't label materials
-  -v V                  version number eg: 17
-```
+# Configuration
 
-> [!TIP]
-> If you want to customize pack name, author, version and other details, you can do so in `src/newb/pack_config.toml`.
+Recommended graphics settings:
 
-<br>
+- Graphics: **Beautiful**
+- Smooth Lighting: **On**
+- Clouds: **On**
+- Fancy Graphics: **On**
+- Brightness: **50%–90%**
 
-## Development
+For better performance, use the **No Fog**, **No Wave**, or **No Fog + No Wave** subpacks.
 
-Clangd can be used to get code completion and error checks for source files inside include/newb. Fake bgfx header and clangd config are provided for the same.
-- **Neovim**: Install clangd LSP.
-- **VSCode**: Install [vscode-clangd](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd) extension.
+---
 
-## License
+# Subpacks
 
-**Source Code:** The "Newb Shader" source code is licensed under the MIT License. You are free to modify, distribute, and create derivative works based on the source code.
+## Default
+Enjoy the complete Newb X Aero experience with every visual enhancement enabled.
 
-**Compiled Resource Packs (`.mcpack` files):** The compiled resource packs distributed by the "Newb Shader" project and its variant creators are copyrighted works with restrictions. See the `COPYRIGHT.txt` file within each resource pack for more information.
+## Box Clouds
+Replaces the default cloud style with classic block-shaped clouds, offering a clean vanilla-inspired appearance while preserving the cinematic atmosphere.
+
+## No Fog
+Disables atmospheric fog to improve long-distance visibility and can provide a small performance boost.
+
+## No Wave
+Removes water wave animations for calmer water surfaces and slightly better performance.
+
+## No Fog + No Wave
+Combines both optimizations, making it the recommended choice for lower-end devices or players who prefer maximum visibility.
+
+---
+
+# Copyright
+
+**Developer:** Goboyy
+
+**Base Shader:** Newb Shader by devendrn
+
+Newb X Aero is a derivative project built upon the Newb Shader base. It contains original visual tuning, configuration adjustments, custom assets, interface modifications, and additional improvements created specifically for this project.
+
+Please respect both the original Newb Shader license and the original content included in Newb X Aero. Redistribution, modification, or reuploading of this project without proper permission is not permitted.
+
+---
+
+# Support
+
+If you enjoy **Newb X Aero**, you can support the project by:
+
+- ⭐ Rate the project on CurseForge.
+- 📢 Share it with your friends.
+- 🐞 Report bugs and compatibility issues.
+- 💡 Suggest new features and improvements.
+- ❤️ Follow the project for future updates.
+
+---
+
+# Credits
+
+- **Base Shader:** Newb Shader — devendrn
+- **Developer:** Goboyy
+
+Special thanks to **devendrn** for creating Newb Shader, which serves as the foundation of this project, and to everyone in the community who has contributed feedback, testing, and support.
