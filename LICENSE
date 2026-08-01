@@ -1,9 +1,33 @@
-MIT License
+# Newb X Aero License
 
-Copyright (c) 2024 devendrn
+Copyright (c) 2026 Goboyy22
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Newb X Aero is based on the open-source Newb Shader project by devendrn.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+All original modifications, configurations, textures, visual tuning, branding, documentation, and compiled releases of NewB X Aero are copyright © Goboyy22.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## Permissions
+
+You may:
+
+- Download and use NewB X Aero for personal use.
+- Share the original, unmodified release while preserving this license and all credits.
+
+## Restrictions
+
+You may NOT:
+
+- Claim NewB X Aero as your own work.
+- Remove or alter the original credits.
+- Redistribute modified builds under the name "NewB X Aero".
+- Re-upload official releases while claiming authorship.
+- Sell this shader without written permission from the author.
+
+If you create your own shader based on the underlying open-source project, you must rename it and clearly credit both:
+
+- devendrn (Newb Shader)
+- Goboyy22 (NewB X Aero)
+
+## Disclaimer
+
+This project includes code originating from Newb Shader, which is licensed under the MIT License. Nothing in this document overrides the permissions granted by the MIT License for code covered by that license.
