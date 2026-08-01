@@ -1,39 +1,70 @@
-name = "Newb Classic"
-version = [0, 16, 53]
+name = "Newb X Aero"
+version = [1, 0, 0]
 min_supported_mc_version = [1, 26, 30]
+
 description = '''
-§c%w
-§7- An enchanced vanilla shader for Minecraft!
-%v
-§3https://newb-shader.devendrn.com/
-''' # %w = patch warning, %v = version
-authors = ["devendrn"]
-url = "https://newb-shader.devendrn.com/"
-uuid = "95f774cf-4afa-73e7-a21a-72146307b1d2" # Use https://www.uuidgenerator.net/version4
-materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
+§bNewb X Aero
+§7Enhanced vanilla RenderDragon shader.
+§7Cinematic lighting, vibrant colors,
+§7clear water, smooth atmosphere,
+§7and optimized performance.
+§aVersion %v
+'''
 
-[info] 
+authors = ["Goboyy22"]
+url = "https://github.com/Goboyy22/Newb-X-Aero"
+
+uuid = "8e2a4d69-7c3b-4a8f-9d73-5f1b8c42e917"
+
+materials = [
+"Sky",
+"RenderChunk",
+"Actor",
+"ActorGlint",
+"EndSky",
+"Clouds",
+"SunMoon",
+"Weather",
+"ItemInHandTextured",
+"ItemInHandColor",
+"ItemInHandColorGlint",
+"Stars"
+]
+
+[info]
+
 copyright = '''
-Copyright © 2026 %a, and "Newb Shader" Contributors
+Copyright © 2026 Goboyy22.
 
-This compiled "Newb Shader" resource pack (source code: https://github.com/devendrn/newb-x-mcbe under MIT License) is licensed under CC BY-ND 4.0 (https://creativecommons.org/licenses/by-nd/4.0/). Redistribute only unmodified copies with proper attribution to "Newb Shader" and variant creators (if any). Do not distribute derivatives.
+Newb X Aero is an enhanced RenderDragon shader based on the open-source Newb Shader project.
 
-You can compile the shader from source and distribute the result under your own terms (compatible with the MIT License).
+Original Newb Shader
+Copyright © devendrn and Newb Shader Contributors.
 
-Contact (Discord Server): https://discord.gg/newb-community-844591537430069279
-''' # %a = authors
+Modifications, visual redesign, optimization, configuration, and additional features:
+© 2026 Goboyy22.
+
+Please provide proper credit when redistributing this shader.
+Do not claim this project as entirely your own.
+'''
+
 credits = '''
+Newb X Aero
+
+Developer
+• Goboyy22
+
+Based On
+• Newb Shader by devendrn
+
+Special Thanks
+• Newb Shader Contributors
+• Minecraft Bedrock Community
+• Everyone who tested and supported this project
 '''
 
 # subpacks are arranged in left to right order
 # right-most subpack is enabled by default
-[[subpack]]
-define = "REALISTIC_CLOUDS"
-materials = ["Clouds", "RenderChunk"]
-description = '''
-Realistic clouds
-'''
-
 [[subpack]]
 define = "ROUNDED_CLOUDS"
 materials = ["Clouds"]
@@ -42,46 +73,25 @@ Rounded Clouds
 '''
 
 [[subpack]]
-define = "BOX_CLOUDS"
-materials = ["Clouds", "RenderChunk"]
-description = '''
-Box Clouds
-'''
-
-[[subpack]]
-define = "CHUNK_ANIM"
-materials = ["RenderChunk"]
-description = '''
-Chunk loading animation
-'''
-
-[[subpack]]
 define = "NO_WAVE_NO_FOG"
 materials = ["RenderChunk"]
 description = '''
-No fog and wave effects
+No Wave + No Fog
 '''
 
 [[subpack]]
 define = "NO_FOG"
 materials = ["RenderChunk"]
 description = '''
-No fog effect
+No Fog
 '''
 
 [[subpack]]
 define = "NO_WAVE"
 materials = ["RenderChunk"]
 description = '''
-No wave effects
+No Wave
 '''
-
-#[[subpack]]
-#define = "LITE"
-#materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
-#description = '''
-#Many effects disabled. A bit lighter!
-#'''
 
 [[subpack]]
 define = "DEFAULT"
