@@ -15,12 +15,12 @@ vec3 colorCorrection(vec3 col) {
     col = col*(1.0+col*whiteScale)/(1.0+col);
   #elif NL_TONEMAP_TYPE == 4
     // aces tonemap
-    const float a = 1.02;
-    const float b = 0.028;
+    const float a = 1.00;
+    const float b = 0.025;
     const float c = 0.92;
-    const float d = 0.54;
-    const float e = 0.15;
-    col *= 0.88;
+    const float d = 0.56;
+    const float e = 0.16;
+    col *= 0.82;
     col = clamp((col*(a*col + b)) / (col*(c*col + d) + e), 0.0, 1.0);
   #elif NL_TONEMAP_TYPE == 2
     // simple reinhard tonemap
@@ -56,7 +56,7 @@ vec3 colorCorrectionInv(vec3 col) {
 
   // incomplete
   // extended reinhard only
-  float ws = 0.81;
+  float ws = 0.79;
   col = pow(col, vec3_splat(NL_GAMMA));
   col = col*(ws + col)/(ws + col*(1.0 - ws));
 
