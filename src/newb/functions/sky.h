@@ -127,29 +127,45 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 }
 
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
-  t *= 0.1;
+  // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
+  t *= 0.08; 
   float a = atan2(viewDir.x, viewDir.z);
 
-  float n1 = 0.5 + 0.5*sin(3.0*a + t + 10.0*viewDir.x*viewDir.y);
-  float n2 = 0.5 + 0.5*sin(5.0*a + 0.5*t + 5.0*n1 + 0.1*sin(40.0*a -4.0*t));
+  // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
+  float n1 = 0.5 + 0.5*sin(3.5*a + t + 12.0*viewDir.x*viewDir.y);
+  // LAPISAN NEBULA 2: Memberikan efek riak detail yang acak pada tepian awan kosmik
+  float n2 = 0.5 + 0.5*sin(6.0*a + 0.4*t + 6.0*n1 + 0.1*sin(45.0*a - 3.5*t));
 
-  float waves = 0.7*n2*n1 + 0.3*n1;
+  // Penggabungan gelombang awan kosmik
+  float waves = 0.75*n2*n1 + 0.25*n1;
 
+  // PREMIUM GRADIENT: Membuat transisi vertikal dari horizon ke langit atas jauh lebih halus
   float grad = 0.5 + 0.5*viewDir.y;
-  float streaks = waves*(1.0 - grad*grad*grad);
-  streaks += (1.0-streaks)*smoothstep(1.0-waves, -1.0, viewDir.y);
+  float streaks = waves * (1.0 - grad*grad*grad);
+  streaks += (1.0-streaks) * smoothstep(1.0-waves, -1.0, viewDir.y);
 
-  float f = 0.3*streaks + 0.7*smoothstep(1.0, -0.5, viewDir.y);
+  float f = 0.35*streaks + 0.65*smoothstep(1.0, -0.6, viewDir.y);
   float h = streaks*streaks;
   float g = h*h;
   g *= g;
 
+  // WARNA DASAR: Mengawinkan warna horizon dan zenith bawaan config Anda
   vec3 sky = mix(zenithCol, horizonCol, f*f);
-  sky += (0.08*streaks + 1.7*g*g*g + 0.8*h*h*h)*vec3(1.4,0.7,0.9);
-  sky += 0.18*streaks*spectrum(sin(1.8*viewDir.x*viewDir.y+t));
+
+  // PREMIUM AERO COLORING (BIRU KEUNGUAN MEWAH):
+  // 1. Tambahan kilauan nebula utama: Perpaduan Ungu Nebula yang pekat dan Biru Elektrik Kosmik
+  vec3 nebulaColor = vec3(0.55, 0.20, 1.30); // Ungu Magenta Kosmik (Mewah)
+  vec3 auroraCore   = vec3(0.15, 0.60, 1.80); // Biru Elektrik / Safir Terang (Kontras Tinggi)
+
+  // 2. Efek Cahaya Menyala (Glow Effect) pada pusaran awan langit The End
+  sky += (0.12*streaks + 2.5*g*g*g + 1.2*h*h*h) * mix(nebulaColor, auroraCore, n2);
+
+  // 3. Efek Spektrum Aurora: Memberikan bias warna pelangi tipis (cyan-violet) di celah-celah kegelapan
+  sky += 0.25 * streaks * spectrum(sin(2.2*viewDir.x*viewDir.y + t)) * vec3(0.3, 0.6, 1.5);
 
   return sky;
 }
+
 
 vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, bool isSkyPlane) {
   vec3 sky;
