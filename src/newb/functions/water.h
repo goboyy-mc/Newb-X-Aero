@@ -49,8 +49,8 @@ vec4 nlWater(
   #endif
 
   // torch light reflection
-  float tc = 0.5+0.5*sin(16.0*viewDir.x)*sin(16.0*viewDir.z);
-  waterRefl += torchColor*NL_TORCHLIGHT_INTENSITY*lit.x*tc*tc;
+  float tc = 0.5+0.5*sin(24.0*viewDir.x)*sin(24.0*viewDir.z);
+  waterRefl += torchColor*NL_TORCHLIGHT_INTENSITY*lit.x*tc*tc*1.3;
 
   // mask sky reflection under shade
   if (!env.end) {
@@ -63,11 +63,11 @@ vec4 nlWater(
   #endif
 
   cosR = abs(cosR);
-  float fresnel = calculateFresnel(cosR, 0.07);
+  float fresnel = calculateFresnel(cosR, 0.15);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.30*NL_WATER_TINT*(1.0-0.7*fresnel);
-  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
+  color.rgb *= 0.65*NL_WATER_TINT*(1.0-0.5*fresnel);
+  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 0.92, opacity*opacity);
 
   #ifdef NL_WATER_WAVE
     if (camDist < 14.0) {
