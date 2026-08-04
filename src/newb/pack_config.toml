@@ -30,7 +30,7 @@ credits = '''
 [[subpack]]
 define = "SOFT_CLOUDS"
 materials = ["Clouds", "RenderChunk"]
-description = """
+description = '''
 Soft clouds
 '''
 
