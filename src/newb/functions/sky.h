@@ -139,7 +139,12 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float r = 3.05;
     //r += 0.1*t;
     vec3 vr = vdir;
-    vr.xy = mat2(cos(r), -sin(r), sin(r), cos(r)) * vr.xy;
+    float cr = cos(r);
+    float sr = sin(r);
+    vec2 rot;
+    rot.x = cr * vr.x - sr * vr.y;
+    rot.y = sr * vr.x + cr * vr.y;
+    vr.xy = rot;
     //r *= 2.0;
     //vr.yz = mat2(cos(r), -sin(r), sin(r), cos(r)) * vr.yz;
     
