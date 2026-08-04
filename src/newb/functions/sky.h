@@ -130,7 +130,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   #define NL_BH_COL_LOW vec3(0.10, 0.30, 0.90)
   #define NL_BH_COL_HIGH vec3(0.10, 1.10, 2.20)
-  #define NL_BH_DIST 2.20
+  #define NL_BH_DIST 3.0
   #define NL_BH_SPEED 0.18
 
   vec4 renderBlackhole(vec3 vdir, float t) {
@@ -148,7 +148,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     //r *= 2.0;
     //vr.yz = mat2(cos(r), -sin(r), sin(r), cos(r)) * vr.yz;
     
-    vec3 vd = vr-vec3(0.0, -1.0, 0.0);
+    vec3 vd = vr - normalize(vec3(0.0, 0.38, 0.93));
     float nl = sin(15.0*vd.x + t)*sin(15.0*vd.y - t)*sin(15.0*vd.z + t);
     float a = atan2(vd.x, vd.z);
     
