@@ -138,10 +138,10 @@
 #define NL_CLOUD1_OPACITY 0.88              // 0.0 invisible ~ 1.0 opaque
 
 /* Rounded cloud settings */
-#define NL_CLOUD2_THICKNESS 3.4            // 0.5 slim ~ 5.0 fat
+#define NL_CLOUD2_THICKNESS 3.5            // 0.5 slim ~ 5.0 fat
 #define NL_CLOUD2_RAIN_THICKNESS 4.2       // 0.5 slim ~ 5.0 fat
 #define NL_CLOUD2_STEPS 5                  // 3 low quality ~ 16 high quality
-#define NL_CLOUD2_SCALE vec2(0.024, 0.024) // 0.003 large ~ 0.3 tiny
+#define NL_CLOUD2_SCALE vec2(0.032, 0.032) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.68, 0.58)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 38.0             // 1.0 blurry ~ 100.0 sharp
 #define NL_CLOUD2_VELOCITY 0.45             // 0.0 static ~ 4.0 very fast
@@ -186,8 +186,8 @@
 //#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
-#define NL_SUN_SIZE  1.05           // 0.3 tiny ~ 4.0 massive
-#define NL_MOON_SIZE 1.05           // 0.3 tiny ~ 4.0 massive
+#define NL_SUN_SIZE  1.00           // 0.3 tiny ~ 4.0 massive
+#define NL_MOON_SIZE 1.00           // 0.3 tiny ~ 4.0 massive
 #define NL_SUN_PATH_YAW    20.0 //
 #define NL_MOON_PATH_YAW   20.0 //
 #define NL_SUN_PATH_TILT   32.0 //
@@ -196,7 +196,7 @@
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 0.25 // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 0.40 // [toggle] 0.1 subtle ~ 0.8 strong
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.6       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
