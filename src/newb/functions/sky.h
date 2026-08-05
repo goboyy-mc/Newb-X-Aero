@@ -128,15 +128,15 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
 // Author: devendrn, Title: Simple blackhole, License: CC BY-SA 4.0
 
-  #define NL_BH_COL_LOW vec3(0.10, 0.30, 0.90)
-  #define NL_BH_COL_HIGH vec3(0.10, 1.10, 2.20)
-  #define NL_BH_DIST 4.00
+  #define NL_BH_COL_LOW vec3(0.06, 0.00, 0.12)
+  #define NL_BH_COL_HIGH vec3(0.90, 0.25, 1.35)
+  #define NL_BH_DIST 1.0
   #define NL_BH_SPEED 0.18
 
   vec4 renderBlackhole(vec3 vdir, float t) {
     t *= NL_BH_SPEED;
     
-    float r = 3.20;
+    float r = 2.4;
     //r += 0.1*t;
     vec3 vr = vdir;
     float cr = cos(r);
@@ -148,7 +148,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     //r *= 2.0;
     //vr.yz = mat2(cos(r), -sin(r), sin(r), cos(r)) * vr.yz;
     
-    vec3 vd = vr - normalize(vec3(0.55, 0.28, 0.78));
+    vec3 vd = vr - vec3(0.0, -1.0, 0.0);
     float nl = sin(15.0*vd.x + t)*sin(15.0*vd.y - t)*sin(15.0*vd.z + t);
     float a = atan2(vd.x, vd.z);
     
