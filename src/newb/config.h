@@ -73,7 +73,10 @@
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.42,0.54,1.05)
 #define NL_DAWN_HORIZON_COL  vec3(3.20,0.90,0.38)
-#define NL_DAWN_EDGE_COL     vec3(2.45,1.12,1.00)
+#define NL_DAWN_EDGE_COL     vec3(2.50,1.28,1.05)
+#define NL_DAWN_GLOW_INTENSITY 1.35
+#define NL_DAWN_GLOW_SPREAD    0.42
+#define NL_DAWN_GLOW_HEIGHT    0.32
 #define NL_DAY_ZENITH_COL    vec3(0.34,0.86,2.55)
 #define NL_DAY_HORIZON_COL   vec3(0.82,1.58,2.32)
 #define NL_DAY_EDGE_COL      vec3(1.00,1.30,1.70)
