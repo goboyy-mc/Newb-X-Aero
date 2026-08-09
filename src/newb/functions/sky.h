@@ -105,6 +105,17 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, gradient1*df*df);
   sky = mix(skyCol.zenith, sky, gradient2*df);
 
+  // dawn / sunset atmospheric glow
+  float horizonGlow = 1.0-abs(viewDir.y);
+  horizonGlow = smoothstep(1.0-NL_DAWN_GLOW_HEIGHT,1.0-NL_DAWN_GLOW_SPREAD,horizonGlow);
+  float sunAngle = max(dot(env.sunDir, viewDir), 0.0);
+  float sunHalo = 1.0-sunAngle;
+  sunHalo = smoothstep(0.0, 1.0, sunHalo);
+  sunHalo *= sunHalo;
+  float dawnGlow = horizonGlow*sunHalo;
+  dawnGlow *= 1.0-env.rainFactor;
+  sky += NL_DAWN_GLOW_INTENSITY*dawnGlow*skyCol.horizon;
+
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
@@ -112,7 +123,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
     source *= source;
-    sky *= 1.0 + 12.0*source*(1.0-env.rainFactor);
+    sky *= 1.0 + 16.0*source*(1.0-env.rainFactor);
   }
 
   #ifdef NL_RAINBOW
