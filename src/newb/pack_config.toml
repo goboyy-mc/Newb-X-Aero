@@ -1,6 +1,6 @@
 name = "Newb Aero Shader"
 version = [1, 2, 0]
-min_supported_mc_version = [1, 26, 30]
+min_supported_mc_version = [1, 26, 40]
 description = '''
 §c Compatible with Android, iOS, Windows, and Linux platforms
 §7- Newb variation by Goboyy22 that focuses on performance
