@@ -2,9 +2,9 @@ name = "Newb Aero Shader"
 version = [1, 2, 0]
 min_supported_mc_version = [1, 26, 30]
 description = '''
-§cOnly works with
+§c Compatible with Android, iOS, Windows, and Linux platforms
 §7- Newb variation by Goboyy22 that focuses on performance
-1.0.0-android
+v1.2.0
 §3https://newb-shader.devendrn.com/
 ''' # %w = patch warning, %v = version
 authors = ["Goboyy22, devendrn"]
@@ -35,6 +35,18 @@ Soft clouds
 '''
 
 [[subpack]]
+define = "[[subpack]]
+define = "SOFT_CLOUDS"
+materials = ["RenderChunk"]
+description = '''
+No Chunk Anim
+'''"
+materials = ["Clouds", "RenderChunk"]
+description = '''
+Soft clouds
+'''
+
+[[subpack]]
 define = "NO_WAVE_NO_FOG"
 materials = ["RenderChunk"]
 description = '''
@@ -54,13 +66,6 @@ materials = ["RenderChunk"]
 description = '''
 No wave effects
 '''
-
-#[[subpack]]
-#define = "LITE"
-#materials = ["Sky", "RenderChunk", "Actor", "ActorGlint", "EndSky", "Clouds", "SunMoon", "Weather", "ItemInHandTextured", "ItemInHandColor", "ItemInHandColorGlint", "Stars"]
-#description = '''
-#Many effects disabled. A bit lighter!
-#'''
 
 [[subpack]]
 define = "DEFAULT"
