@@ -227,6 +227,7 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   sky += 0.20*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.65,0.22,0.95);
 
   vec4 bh = renderBlackhole(viewDir, t);
+  sky = mix(sky, vec3(0.0, 0.0, 0.0), bh.a);
   sky += bh.rgb;
   
   return sky;
