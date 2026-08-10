@@ -40,6 +40,7 @@ vec4 nlWater(
   viewDir = viewDir - 2.0*cosR*nrm ; // reflect(viewDir, nrm)
 
   vec3 waterRefl = nlRenderSky(skycol, env, viewDir, t, false);
+  waterRefl *= 0.35;
 
   #if defined(NL_CLOUD_AURORA_REFLECTION)
     if (viewDir.y < 0.0) {
@@ -54,7 +55,7 @@ vec4 nlWater(
 
   // mask sky reflection under shade
   if (!env.end) {
-    waterRefl *= 0.04 + lit.y*0.98;
+    waterRefl *= 0.04 + lit.y*0.65;
   }
 
   #ifdef NL_WATER_REFL_MASK
