@@ -215,10 +215,10 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   float a = atan2(viewDir.x, viewDir.z);
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
-  float n1 = 0.5 + 0.5*sin(3.5*a + t + 12.0*viewDir.x*viewDir.y);
+  float n1 = 0.5 + 0.5*sin(4.0*a + t + 12.0*viewDir.x*viewDir.y);
   // LAPISAN NEBULA 2: Memberikan efek riak detail yang acak pada tepian awan kosmik
   float n2 = 0.5 + 0.5*sin(6.0*a + 0.4*t + 6.0*n1 + 0.1*sin(45.0*a - 3.5*t));
-
+  
   // Penggabungan gelombang awan kosmik
   float waves = 0.75*n2*n1 + 0.25*n1;
 
