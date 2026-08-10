@@ -88,7 +88,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
-      float skyHeight = clamp(viewDir.y,0.0,1.0);
+  float skyHeight = clamp(viewDir.y,0.0,1.0);
 
   // Very smooth vertical interpolation
   float smoothHeight = skyHeight*skyHeight*(3.0-2.0*skyHeight);
@@ -97,39 +97,30 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   // Dawn / sunset strength
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
   dawnFactor = clamp(dawnFactor,0.0,1.0);
+  dawnFactor *= dawnFactor;
+  dawnFactor *= dawnFactor*(3.0-2.0*dawnFactor);
 
-  float sunset = dawnFactor*dawnFactor;
-  sunset = sunset*(3.0-2.0*sunset);
-
-  // -----------------------------------------
-  // THREE-LAYER SUNSET GRADIENT
-  // blue
-  //   ↓
-  // pink / magenta
-  //   ↓
-  // orange / gold
-  // -----------------------------------------
-
-  // Orange -> pink
-  float orangeToPink = smoothstep(0.0,0.42,skyHeight);
-  vec3 sunsetLower = mix(skyCol.horizon,skyCol.horizonEdge,orangeToPink);
-
-  // Pink -> blue
-  float pinkToBlue = smoothstep(0.38,1.0,skyHeight);
-  vec3 sunsetSky = mix(sunsetLower,skyCol.zenith,pinkToBlue);
-
-  // Normal smooth day/night gradient
+  // Normal day/night gradient
   vec3 normalSky = mix(skyCol.horizon,skyCol.zenith,smoothHeight);
 
-  // Blend sunset atmosphere smoothly
-  vec3 sky = mix(normalSky,sunsetSky,sunset);
+  // Sunset / sunrise hanya di bagian bawah langit
+  float sunsetMask = 1.0-smoothstep(0.05,0.58,skyHeight);
+  sunsetMask *= sunsetMask*(3.0-2.0*sunsetMask);
 
-  // Soft horizon transition
-  float horizonFade = smoothstep(0.0,0.55,skyHeight);
+  // Gradasi dawn:
+  // orange/gold -> violet -> warna langit normal
+  float orangeBlend = smoothstep(0.0,0.32,skyHeight);
+  float violetBlend = smoothstep(0.28,0.72,skyHeight);
+  vec3 dawnLower = mix(NL_DAWN_HORIZON_COL,NL_DAWN_EDGE_COL,orangeBlend);
+  vec3 dawnSky = mix(dawnLower,NL_DAWN_ZENITH_COL,violetBlend);
+
+  // Masukkan warna dawn hanya saat sunrise/sunset
+  float dawnBlend = dawnFactor*sunsetMask;
+  vec3 sky = mix(normalSky,dawnSky,dawnBlend);
+
+  // Sangat halus di horizon
+  float horizonFade = smoothstep(0.0,0.42,skyHeight);
   sky = mix(skyCol.horizon,sky,horizonFade);
-
-  // Preserve sun direction influence
-  float df = mix(1.0,g2.x,sunset);
   
   // dawn / sunset atmospheric glow
   float horizonGlow = 1.0-abs(viewDir.y);
