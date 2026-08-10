@@ -141,7 +141,6 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float dawnGlow = horizonGlow*sunHalo;
   dawnGlow *= 1.0-env.rainFactor;
   sky += NL_DAWN_GLOW_INTENSITY*dawnGlow*skyCol.horizon;
-  sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
   if (!isSkyPlane) {
