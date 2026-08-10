@@ -35,8 +35,7 @@ Soft clouds
 '''
 
 [[subpack]]
-define = "[[subpack]]
-define = "SOFT_CLOUDS"
+define = ""
 materials = ["RenderChunk"]
 description = '''
 No Chunk Anim
