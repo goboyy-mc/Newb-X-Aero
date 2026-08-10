@@ -45,10 +45,10 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
   s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
 
-    float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-    dawnFactor = dawnFactor*dawnFactor;
-    dawnFactor *= dawnFactor;
-    dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
+  float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
+  dawnFactor = dawnFactor*dawnFactor;
+  dawnFactor *= dawnFactor;
+   dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
   s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
   s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
@@ -122,7 +122,18 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float sunGlow = max(0.0, dot(env.sunDir, viewDir));
     sunGlow = smoothstep(0.0, 0.8, sunGlow);
     sunGlow *= sunGlow;
-    sky += skyCol.horizon*sunsetGlow*sunGlow*1.8;
+    sky += skyCol.horizon*sunsetGlow*sunGlow*3.2;
+
+    float ray = max(0.0, dot(env.sunDir, viewDir));
+    ray = smoothstep(0.05,0.85,ray);
+    ray *= ray;
+    ray *= ray;
+
+    float rayFade = 1.0-abs(viewDir.y);
+    rayFade *= rayFade;
+
+    vec3 rayColor = vec3(1.00,0.22,0.07);
+    sky += ray*rayFade*sunsetGlow*1.8*rayColor;
   }
 
   #ifdef NL_RAINBOW
