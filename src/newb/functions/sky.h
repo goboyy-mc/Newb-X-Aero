@@ -160,20 +160,18 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     
     vec3 vd = vr - vec3(0.0, -1.0, 0.0);
     float nl = sin(15.0*vd.x + t)*sin(15.0*vd.y - t)*sin(15.0*vd.z + t);
-    
-    float df = sin(3.0*vd.x - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
-    //d *= 1.2 + 0.8*sin(0.2*t);
+
+    float d = NL_BH_DIST*length(vd + 0.003*nl);
     float d0 = (0.6-d)/0.6;
     float dm0 = 1.0-max(d0, 0.0);
-    
+
     float gl = 1.0-clamp(-0.3*d0, 0.0, 1.0);
     float gla = pow(1.0-min(abs(d0), 1.0), 8.0);
     float gl8 = pow(gl, 8.0);
-    
+
     float hole = 0.9*pow(dm0, 32.0) + 0.1*pow(dm0, 3.0);
     float bh = (gla + 0.8*gl8 + 0.2*gl8*gl8) * hole;
-    
-    float df = sin(3.0*a - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
+    float df = sin(3.0*vd.x - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
     df *= 0.9 + 0.1*sin(8.0*vd.z + d + 4.0*t - 4.0*df);
     bh *= 1.0 + pow(df, 4.0)*hole*max(1.0-bh, 0.0);
     
