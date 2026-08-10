@@ -71,12 +71,12 @@
 #define NL_SKY_RAIN_MIX_FACTOR 0.82
 
 /* Sky colors - zenith=top, horizon=bottom */
-#define NL_DAWN_ZENITH_COL   vec3(0.52,0.34,0.72)
-#define NL_DAWN_HORIZON_COL  vec3(1.12,0.48,0.22)
-#define NL_DAWN_EDGE_COL     vec3(1.08,0.68,0.38)
-#define NL_DAWN_GLOW_INTENSITY 1.10
-#define NL_DAWN_GLOW_SPREAD    0.50
-#define NL_DAWN_GLOW_HEIGHT    0.30
+#define NL_DAWN_ZENITH_COL   vec3(0.42,0.18,0.58)
+#define NL_DAWN_HORIZON_COL  vec3(1.00,0.38,0.50)
+#define NL_DAWN_EDGE_COL     vec3(1.00,0.62,0.28)
+#define NL_DAWN_GLOW_INTENSITY 1.65
+#define NL_DAWN_GLOW_SPREAD    0.65
+#define NL_DAWN_GLOW_HEIGHT    0.38
 #define NL_DAY_ZENITH_COL    vec3(0.34,0.86,2.55)
 #define NL_DAY_HORIZON_COL   vec3(0.82,1.58,2.32)
 #define NL_DAY_EDGE_COL      vec3(1.00,1.30,1.70)
