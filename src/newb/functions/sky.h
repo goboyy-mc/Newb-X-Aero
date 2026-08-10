@@ -45,9 +45,10 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
   s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
 
-  float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-  dawnFactor *= dawnFactor*dawnFactor;
-  dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
+    float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
+    dawnFactor = dawnFactor*dawnFactor;
+    dawnFactor *= dawnFactor;
+    dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
   s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
   s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
@@ -88,57 +89,40 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
-  float skyHeight = clamp(viewDir.y,0.0,1.0);
+  float vh = 1.0 - viewDir.y*viewDir.y;
+  float vh2 = vh*vh;
+  vh2 = mix(vh2, mix(1.0, vh2*vh2, NL_SKY_VOID_FACTOR), step(viewDir.y, 0.0));
+  vh2 = mix(vh2, 1.0, mg8);
+  float vh4 = vh2*vh2;
 
-  // Very smooth vertical interpolation
-  float smoothHeight = skyHeight*skyHeight*(3.0-2.0*skyHeight);
-  smoothHeight = smoothHeight*smoothHeight*(3.0-2.0*smoothHeight);
+  float gradient1 = vh4*vh4;
+  float gradient2 = 0.8*gradient1 + 0.2*vh2;
+  gradient1 *= gradient1;
+  gradient1 = mix(gradient1*gradient1, 1.0, mg8);
+  gradient2 = mix(gradient2, 1.0, mg8);
 
-  // Dawn / sunset strength
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-  dawnFactor = clamp(dawnFactor,0.0,1.0);
-  dawnFactor *= dawnFactor;
-  dawnFactor *= dawnFactor*(3.0-2.0*dawnFactor);
+  float df = mix(1.0, g2.x, dawnFactor*dawnFactor);
+  vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, gradient1*df*df);
+  sky = mix(skyCol.zenith, sky, gradient2*df);
 
-  // Normal day/night gradient
-  vec3 normalSky = mix(skyCol.horizon,skyCol.zenith,smoothHeight);
-
-  // Sunset / sunrise hanya di bagian bawah langit
-  float sunsetMask = 1.0-smoothstep(0.05,0.58,skyHeight);
-  sunsetMask *= sunsetMask*(3.0-2.0*sunsetMask);
-
-  // Gradasi dawn:
-  // orange/gold -> violet -> warna langit normal
-  float orangeBlend = smoothstep(0.0,0.32,skyHeight);
-  float violetBlend = smoothstep(0.28,0.72,skyHeight);
-  vec3 dawnLower = mix(NL_DAWN_HORIZON_COL,NL_DAWN_EDGE_COL,orangeBlend);
-  vec3 dawnSky = mix(dawnLower,NL_DAWN_ZENITH_COL,violetBlend);
-
-  // Masukkan warna dawn hanya saat sunrise/sunset
-  float dawnBlend = dawnFactor*sunsetMask;
-  vec3 sky = mix(normalSky,dawnSky,dawnBlend);
-
-  // Sangat halus di horizon
-  float horizonFade = smoothstep(0.0,0.42,skyHeight);
-  sky = mix(skyCol.horizon,sky,horizonFade);
-  
-  // dawn / sunset atmospheric glow
-  float horizonGlow = 1.0-abs(viewDir.y);
-  horizonGlow = smoothstep(1.0-NL_DAWN_GLOW_SPREAD,1.0-NL_DAWN_GLOW_HEIGHT,horizonGlow);
-  float sunAngle = max(dot(env.sunDir, viewDir), 0.0);
-  float sunHalo = 1.0-sunAngle;
-  sunHalo = smoothstep(0.0, 1.0, sunHalo);
-  sunHalo *= sunHalo;
-  float dawnGlow = horizonGlow*sunHalo;
-  dawnGlow *= 1.0-env.rainFactor;
-  sky += NL_DAWN_GLOW_INTENSITY*dawnGlow*skyCol.horizon;
+  sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
   if (!isSkyPlane) {
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
     source *= source;
-    sky *= 1.0 + 16.0*source*(1.0-env.rainFactor);
+    sky *= 1.0 + 20.0*source*(1.0-env.rainFactor);
+    
+    //sunset glow
+    float sunsetGlow = max(0.0, 1.0-abs(env.dayFactor));
+    sunsetGlow *= sunsetGlow;
+    sunsetGlow *= sunsetGlow;
+    float sunGlow = max(0.0, dot(env.sunDir, viewDir));
+    sunGlow = smoothstep(0.0, 0.8, sunGlow);
+    sunGlow *= sunGlow;
+    sky += skyCol.horizon*sunsetGlow*sunGlow*1.8;
   }
 
   #ifdef NL_RAINBOW
@@ -154,8 +138,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
 // Author: devendrn, Title: Simple blackhole, License: CC BY-SA 4.0
 
-  #define NL_BH_COL_LOW vec3(0.06, 0.00, 0.12)
-  #define NL_BH_COL_HIGH vec3(0.90, 0.25, 1.35)
+  #define NL_BH_COL_LOW  vec3(0.05, 0.01, 0.10)
+  #define NL_BH_COL_HIGH vec3(0.72, 0.16, 0.95)
   #define NL_BH_DIST 1.0
   #define NL_BH_SPEED 0.18
 
@@ -176,9 +160,8 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     
     vec3 vd = vr - vec3(0.0, -1.0, 0.0);
     float nl = sin(15.0*vd.x + t)*sin(15.0*vd.y - t)*sin(15.0*vd.z + t);
-    float a = atan2(vd.x, vd.z);
     
-    float d = NL_BH_DIST*length(vd + 0.003*nl);
+    float df = sin(3.0*vd.x - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
     //d *= 1.2 + 0.8*sin(0.2*t);
     float d0 = (0.6-d)/0.6;
     float dm0 = 1.0-max(d0, 0.0);
@@ -191,23 +174,21 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float bh = (gla + 0.8*gl8 + 0.2*gl8*gl8) * hole;
     
     float df = sin(3.0*a - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
-    df *= 0.9 + 0.1*sin(8.0*a + d + 4.0*t - 4.0*df);
+    df *= 0.9 + 0.1*sin(8.0*vd.z + d + 4.0*t - 4.0*df);
     bh *= 1.0 + pow(df, 4.0)*hole*max(1.0-bh, 0.0);
     
     vec3 col = bh*4.0*mix(NL_BH_COL_LOW, NL_BH_COL_HIGH , min(bh, 1.0));
     return vec4(col, hole);
   }
 
-
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
   t *= 0.08; 
-  float a = atan2(viewDir.x, viewDir.z);
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
-  float n1 = 0.5 + 0.5*sin(4.0*a + t + 12.0*viewDir.x*viewDir.y);
+  float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + t + 12.0*viewDir.x*viewDir.y);
   // LAPISAN NEBULA 2: Memberikan efek riak detail yang acak pada tepian awan kosmik
-  float n2 = 0.5 + 0.5*sin(6.0*a + 0.4*t + 6.0*n1 + 0.1*sin(45.0*a - 3.5*t));
+  float n2 = 0.5 + 0.5*sin(6.0*viewDir.x - 5.0*viewDir.z + 0.4*t + 6.0*n1 + 0.1*sin(45.0*viewDir.z - 3.5*t));
   
   // Penggabungan gelombang awan kosmik
   float waves = 0.75*n2*n1 + 0.25*n1;
@@ -227,21 +208,20 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
 
   // PREMIUM AERO COLORING (BIRU KEUNGUAN MEWAH):
   // 1. Tambahan kilauan nebula utama: Perpaduan Ungu Nebula yang pekat dan Biru Elektrik Kosmik
-  vec3 nebulaColor = vec3(0.55, 0.20, 1.30); // Ungu Magenta Kosmik (Mewah)
-  vec3 auroraCore   = vec3(0.15, 0.60, 1.80); // Biru Elektrik / Safir Terang (Kontras Tinggi)
+  vec3 nebulaColor = vec3(0.48, 0.10, 0.82);
+  vec3 auroraCore  = vec3(0.82, 0.20, 1.05);
 
   // 2. Efek Cahaya Menyala (Glow Effect) pada pusaran awan langit The End
   sky += (0.12*streaks + 2.5*g*g*g + 1.2*h*h*h) * mix(nebulaColor, auroraCore, n2);
 
   // 3. Efek Spektrum Aurora: Memberikan bias warna pelangi tipis (cyan-violet) di celah-celah kegelapan
-  sky += 0.25 * streaks * spectrum(sin(2.2*viewDir.x*viewDir.y + t)) * vec3(0.3, 0.6, 1.5);
+  sky += 0.20*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.65,0.22,0.95);
 
   vec4 bh = renderBlackhole(viewDir, t);
   sky += bh.rgb;
   
   return sky;
 }
-
 
 vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, bool isSkyPlane) {
   vec3 sky;
