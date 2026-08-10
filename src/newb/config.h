@@ -86,8 +86,8 @@
 #define NL_RAIN_ZENITH_COL   vec3(0.20,0.25,0.34)
 #define NL_RAIN_HORIZON_COL  vec3(0.38,0.44,0.52)
 
-#define NL_END_ZENITH_COL    vec3(0.13,0.05,0.28)
-#define NL_END_HORIZON_COL   vec3(0.62,0.18,0.82)
+#define NL_END_ZENITH_COL    vec3(0.08,0.03,0.18)
+#define NL_END_HORIZON_COL   vec3(0.42,0.12,0.58)
 
 
 /* Rainbow */
