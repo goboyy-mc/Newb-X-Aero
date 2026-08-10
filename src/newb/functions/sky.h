@@ -88,26 +88,52 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   vec2 g8 = g4*g4;
   float mg8 = (g8.x+g8.y)*mask*(1.0-0.9*env.rainFactor);
 
-  float vh = 1.0 - viewDir.y*viewDir.y;
-  float vh2 = vh*vh;
-  vh2 = mix(vh2, mix(1.0, vh2*vh2, NL_SKY_VOID_FACTOR), step(viewDir.y, 0.0));
-  vh2 = mix(vh2, 1.0, mg8);
-  float vh4 = vh2*vh2;
+      float skyHeight = clamp(viewDir.y,0.0,1.0);
 
-  float gradient1 = vh4*vh4;
-  float gradient2 = 0.8*gradient1 + 0.2*vh2;
-  gradient1 *= gradient1;
-  gradient1 = mix(gradient1*gradient1, 1.0, mg8);
-  gradient2 = mix(gradient2, 1.0, mg8);
+  // Very smooth vertical interpolation
+  float smoothHeight = skyHeight*skyHeight*(3.0-2.0*skyHeight);
+  smoothHeight = smoothHeight*smoothHeight*(3.0-2.0*smoothHeight);
 
+  // Dawn / sunset strength
   float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-  float df = mix(1.0, g2.x, dawnFactor*dawnFactor);
-  vec3 sky = mix(skyCol.horizon, skyCol.horizonEdge, gradient1*df*df);
-  sky = mix(skyCol.zenith, sky, gradient2*df);
+  dawnFactor = clamp(dawnFactor,0.0,1.0);
 
+  float sunset = dawnFactor*dawnFactor;
+  sunset = sunset*(3.0-2.0*sunset);
+
+  // -----------------------------------------
+  // THREE-LAYER SUNSET GRADIENT
+  // blue
+  //   ↓
+  // pink / magenta
+  //   ↓
+  // orange / gold
+  // -----------------------------------------
+
+  // Orange -> pink
+  float orangeToPink = smoothstep(0.0,0.42,skyHeight);
+  vec3 sunsetLower = mix(skyCol.horizon,skyCol.horizonEdge,orangeToPink);
+
+  // Pink -> blue
+  float pinkToBlue = smoothstep(0.38,1.0,skyHeight);
+  vec3 sunsetSky = mix(sunsetLower,skyCol.zenith,pinkToBlue);
+
+  // Normal smooth day/night gradient
+  vec3 normalSky = mix(skyCol.horizon,skyCol.zenith,smoothHeight);
+
+  // Blend sunset atmosphere smoothly
+  vec3 sky = mix(normalSky,sunsetSky,sunset);
+
+  // Soft horizon transition
+  float horizonFade = smoothstep(0.0,0.55,skyHeight);
+  sky = mix(skyCol.horizon,sky,horizonFade);
+
+  // Preserve sun direction influence
+  float df = mix(1.0,g2.x,sunset);
+  
   // dawn / sunset atmospheric glow
   float horizonGlow = 1.0-abs(viewDir.y);
-  horizonGlow = smoothstep(1.0-NL_DAWN_GLOW_HEIGHT,1.0-NL_DAWN_GLOW_SPREAD,horizonGlow);
+  horizonGlow = smoothstep(1.0-NL_DAWN_GLOW_SPREAD,1.0-NL_DAWN_GLOW_HEIGHT,horizonGlow);
   float sunAngle = max(dot(env.sunDir, viewDir), 0.0);
   float sunHalo = 1.0-sunAngle;
   sunHalo = smoothstep(0.0, 1.0, sunHalo);
@@ -115,7 +141,6 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   float dawnGlow = horizonGlow*sunHalo;
   dawnGlow *= 1.0-env.rainFactor;
   sky += NL_DAWN_GLOW_INTENSITY*dawnGlow*skyCol.horizon;
-
   sky *= 0.5+0.5*gradient2;
   sky *= (1.0 + (2.0*mg8 + 7.0*mg8*mg8)*mask)*mix(1.0, mask, NL_SKY_VOID_DARKNESS);
 
