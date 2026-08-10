@@ -262,7 +262,7 @@
   #undef NL_RAIN_MIST_OPACITY
 #endif
 
-#ifdef CHUNK_ANIM
+#ifdef NO_CHUNK_ANIM
   #undef NL_CHUNK_LOAD_ANIM 
 #endif
 
