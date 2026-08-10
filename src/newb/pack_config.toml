@@ -35,14 +35,10 @@ Soft clouds
 '''
 
 [[subpack]]
-define = ""
+define = "NO_CHUNK_ANIM"
 materials = ["RenderChunk"]
 description = '''
 No Chunk Anim
-'''"
-materials = ["Clouds", "RenderChunk"]
-description = '''
-Soft clouds
 '''
 
 [[subpack]]
