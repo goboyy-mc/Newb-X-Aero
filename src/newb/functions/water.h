@@ -40,7 +40,6 @@ vec4 nlWater(
   viewDir = viewDir - 2.0*cosR*nrm ; // reflect(viewDir, nrm)
 
   vec3 waterRefl = nlRenderSky(skycol, env, viewDir, t, false);
-  waterRefl *= 0.35;
 
   #if defined(NL_CLOUD_AURORA_REFLECTION)
     if (viewDir.y < 0.0) {
@@ -50,12 +49,12 @@ vec4 nlWater(
   #endif
 
   // torch light reflection
-  float tc = 0.5+0.5*sin(24.0*viewDir.x)*sin(24.0*viewDir.z);
-  waterRefl += torchColor*NL_TORCHLIGHT_INTENSITY*lit.x*tc*tc*1.3;
+  float tc = 0.5+0.5*sin(16.0*viewDir.x)*sin(16.0*viewDir.z);
+  waterRefl += torchColor*NL_TORCHLIGHT_INTENSITY*lit.x*tc*tc;
 
   // mask sky reflection under shade
   if (!env.end) {
-    waterRefl *= 0.04 + lit.y*0.65;
+    waterRefl *= 0.04 + lit.y*0.98;
   }
 
   #ifdef NL_WATER_REFL_MASK
@@ -64,11 +63,11 @@ vec4 nlWater(
   #endif
 
   cosR = abs(cosR);
-  float fresnel = calculateFresnel(cosR, 0.15);
+  float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.65*NL_WATER_TINT*(1.0-0.5*fresnel);
-  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 0.92, opacity*opacity);
+  color.rgb *= 0.26*NL_WATER_TINT*(1.0-0.75*fresnel);
+  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
 
   #ifdef NL_WATER_WAVE
     if (camDist < 14.0) {

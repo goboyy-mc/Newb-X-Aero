@@ -63,7 +63,7 @@ vec3 nlLighting(
     nightIntensity *= nightIntensity;
 
     float sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
-    sunLightAttenuation = mix(1.0, pow(sunLightAttenuation, 1.2), dawnFactor);
+    sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
     sunLightAttenuation *= 1.0-0.4*env.rainFactor;
 
     // shadow cast by sun light
@@ -87,7 +87,7 @@ vec3 nlLighting(
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon + skycol.zenith)*(uv1.y*(1.0 + 0.35*dawnFactor)/(1.0 + lum));
+    light += (skycol.horizon + skycol.zenith)*(uv1.y/(1.0+lum));
 
   }
 
@@ -151,7 +151,7 @@ vec3 nlEntityLighting(nl_skycolor skycol, nl_environment env, vec3 pos, vec4 nor
     nightIntensity *= nightIntensity;
 
     float sunLightAttenuation = clamp(0.5*(((2.0*step(TIME_OF_DAY, 0.5)-1.0)*(wPos.x*cos(NL_SUN_PATH_YAW)+wPos.y*sin(NL_SUN_PATH_YAW))/renderdistance) + 1.0), 0.0, 1.0);
-    sunLightAttenuation = mix(1.0, pow(sunLightAttenuation, 1.2), dawnFactor);
+    sunLightAttenuation = mix(1.0, sunLightAttenuation*sunLightAttenuation, dawnFactor);
     sunLightAttenuation *= 1.0-0.5*env.rainFactor;
 
     // direct light from top
@@ -161,7 +161,7 @@ vec3 nlEntityLighting(nl_skycolor skycol, nl_environment env, vec3 pos, vec4 nor
 
     // sky ambient
     lum = luminance(light);
-    light += (skycol.horizon + skycol.zenith)*(l*(1.0 + 0.35*dawnFactor)/(1.0 + lum));
+    light += (skycol.horizon + skycol.zenith)*(l/(1.0+lum));
   }
 
   // torch light

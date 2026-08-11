@@ -45,10 +45,10 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
   s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
 
-  float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-  dawnFactor = smoothstep(0.0,1.0,dawnFactor);
-  dawnFactor = dawnFactor*dawnFactor;
-  dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
+    float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
+    dawnFactor = dawnFactor*dawnFactor;
+    dawnFactor *= dawnFactor;
+    dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
   s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
   s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
@@ -122,18 +122,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float sunGlow = max(0.0, dot(env.sunDir, viewDir));
     sunGlow = smoothstep(0.0, 0.8, sunGlow);
     sunGlow *= sunGlow;
-    sky += skyCol.horizon*sunsetGlow*sunGlow*3.2;
-
-    float ray = max(0.0, dot(env.sunDir, viewDir));
-    ray = smoothstep(0.05,0.85,ray);
-    ray *= ray;
-    ray *= ray;
-
-    float rayFade = 1.0-abs(viewDir.y);
-    rayFade *= rayFade;
-
-    vec3 rayColor = vec3(1.00,0.22,0.07);
-    sky += ray*rayFade*sunsetGlow*1.8*rayColor;
+    sky += skyCol.horizon*sunsetGlow*sunGlow*1.8;
   }
 
   #ifdef NL_RAINBOW
@@ -171,18 +160,20 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     
     vec3 vd = vr - vec3(0.0, -1.0, 0.0);
     float nl = sin(15.0*vd.x + t)*sin(15.0*vd.y - t)*sin(15.0*vd.z + t);
-
-    float d = NL_BH_DIST*length(vd + 0.003*nl);
+    
+    float df = sin(3.0*vd.x - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
+    //d *= 1.2 + 0.8*sin(0.2*t);
     float d0 = (0.6-d)/0.6;
     float dm0 = 1.0-max(d0, 0.0);
-
+    
     float gl = 1.0-clamp(-0.3*d0, 0.0, 1.0);
     float gla = pow(1.0-min(abs(d0), 1.0), 8.0);
     float gl8 = pow(gl, 8.0);
-
+    
     float hole = 0.9*pow(dm0, 32.0) + 0.1*pow(dm0, 3.0);
     float bh = (gla + 0.8*gl8 + 0.2*gl8*gl8) * hole;
-    float df = sin(3.0*vd.x - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
+    
+    float df = sin(3.0*a - 4.0*d + 24.0*pow(1.4-d, 4.0) + t);
     df *= 0.9 + 0.1*sin(8.0*vd.z + d + 4.0*t - 4.0*df);
     bh *= 1.0 + pow(df, 4.0)*hole*max(1.0-bh, 0.0);
     
@@ -227,7 +218,6 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   sky += 0.20*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.65,0.22,0.95);
 
   vec4 bh = renderBlackhole(viewDir, t);
-  sky = mix(sky, vec3(0.0, 0.0, 0.0), bh.a);
   sky += bh.rgb;
   
   return sky;
