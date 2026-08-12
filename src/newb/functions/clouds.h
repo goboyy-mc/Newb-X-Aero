@@ -32,7 +32,7 @@ vec4 renderCloudsSimple(nl_skycolor skycol, vec3 pos, highp float t, float rain)
   float d = cloudNoise2D(pos.xz, t, rain);
   vec4 col = vec4(skycol.horizonEdge + skycol.zenith, smoothstep(0.16,0.64,d));
   col.rgb += 1.18*dot(col.rgb, vec3(0.3,0.4,0.3))*smoothstep(0.6,0.2,d)*col.a;
-  col.rgb *= 1.0 - 0.68*rain;
+  col.rgb *= 1.0 - 0.8*rain;
   return col;
 }
 
@@ -87,16 +87,32 @@ vec4 renderCloudsRounded(
     d.y = mix(d.y, pos.y, m);
     pos += deltaP;
   }
-  d.x *= smoothstep(0.03, 0.1, d.x);
+
+  d.x *= smoothstep(0.03,0.1,d.x);
   d.x /= (stepsf/density) + d.x;
 
-  if (vPos.y < 0.0) { // view from top
-    d.y = 1.0 - d.y;
+  if (vPos.y < 0.0) {
+    d.y = 1.0-d.y;
   }
 
-  vec4 col = vec4(zenithCol + horizonCol, d.x);
-  col.rgb += dot(col.rgb, vec3(0.3,0.4,0.3))*d.y*d.y;
-  col.rgb *= 1.0 - 0.68*rain;
+  // light blue rounded cloud colors
+  vec3 cloudTop = vec3(0.72,0.92,1.08);
+  vec3 cloudBottom = vec3(0.34,0.68,0.92);
+
+  // smooth vertical color variation
+  vec3 cloudColor = mix(cloudBottom,cloudTop,d.y);
+
+  // soft atmospheric brightness
+  cloudColor += 0.10*(zenithCol + horizonCol);
+
+  vec4 col = vec4(cloudColor,d.x);
+
+  // soft cloud highlights
+  col.rgb += dot(col.rgb,vec3(0.30,0.42,0.38))*d.y*d.y;
+
+  // retain rain darkening
+  col.rgb *= 1.0-0.48*rain;
+
   return col;
 }
 
@@ -146,17 +162,51 @@ vec4 renderClouds(vec2 p, float t, float rain, vec3 horizonCol, vec3 zenithCol, 
 #ifdef NL_AURORA
 vec4 renderAurora(vec3 p, float t, float rain, vec3 FOG_COLOR) {
   t *= NL_AURORA_VELOCITY;
-  p.xz *= NL_AURORA_SCALE;
-  p.xz += 0.03*sin(p.x*4.0 + 20.0*t);
 
-  float d0 = sin(p.x*0.1 + t + sin(p.z*0.2));
-  float d1 = sin(p.z*0.1 - t + sin(p.x*0.2));
-  float d2 = sin(p.z*0.1 + 1.0*sin(d0 + d1*2.0) + d1*2.0 + d0*1.0);
-  d0 *= d0; d1 *= d1; d2 *= d2;
-  d2 = d0/(1.0 + d2/NL_AURORA_WIDTH);
+  // large-scale curtain movement
+  float x = p.x*NL_AURORA_SCALE;
+  float z = p.z*NL_AURORA_SCALE;
+  float wave1 = sin(x*1.8 + t*2.0);
+  float wave2 = sin(x*3.7 - t*1.2 + sin(z*0.7));
+  float wave3 = sin(x*7.0 + t*0.8);
 
-  float mask = (1.0-0.8*rain)*max(1.0 - 4.5*max(FOG_COLOR.b, FOG_COLOR.g), 0.0);
-  return vec4(NL_AURORA*mix(NL_AURORA_COL1,NL_AURORA_COL2,d1),1.0)*d2*mask;
+  // vertical curtain folds
+  float curtain = 0.5 + 0.5*(0.62*wave1 + 0.28*wave2 + 0.10*wave3);
+  curtain = smoothstep(0.22,0.78,curtain);
+
+  // long vertical hanging strands
+  float vertical = 0.5 + 0.5*sin(z*1.2 + wave1*2.5 + wave2*1.2 + t*0.35);
+  vertical = smoothstep(0.18,0.82,vertical);
+
+  // combine curtain folds
+  float d = curtain*vertical;
+
+  // soften the curtain edges
+  d *= d;
+  d = smoothstep(0.04,0.72,d);
+
+  // fade toward the top and bottom
+  float heightFade = 1.0-abs(p.y);
+  heightFade = smoothstep(0.0,1.0,heightFade);
+  heightFade *= heightFade;
+  d *= heightFade;
+
+  // multiple luminous curtain layers
+  float layer1 = sin(x*2.4 + t + sin(z*0.6));
+  float layer2 = sin(x*5.2 - t*0.7 + layer1);
+  float layer3 = sin(x*9.0 + t*0.4);
+
+  float detail = 0.5 + 0.5*(0.55*layer1 + 0.30*layer2 + 0.15*layer3);
+  detail = smoothstep(0.25,0.80,detail);
+
+  d *= 0.65 + 0.35*detail;
+
+  // weather fade
+  float mask = (1.0-0.8*rain)*max(1.0-4.5*max(FOG_COLOR.b,FOG_COLOR.g),0.0);
+
+  // aurora color gradient
+  vec3 auroraColor = mix(NL_AURORA_COL1,NL_AURORA_COL2,0.5+0.5*sin(x*1.8+t+detail*2.0));
+  return vec4(auroraColor,d*NL_AURORA*mask);
 }
 #endif
 
