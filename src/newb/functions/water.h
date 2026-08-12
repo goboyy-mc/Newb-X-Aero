@@ -66,23 +66,34 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-    // strong water body color
-  vec3 waterBase = NL_WATER_TINT;
+      // tropical water color
+  vec3 waterBase = vec3(0.22,0.58,0.38);
 
-  // underwater depth tint
+  // underwater depth
   float depth = clamp(1.0-cosR,0.0,1.0);
   depth *= depth;
 
-  waterBase *= 0.72+0.28*depth;
+  // deeper water becomes richer green
+  waterBase = mix(
+    vec3(0.30,0.66,0.44),
+    vec3(0.12,0.42,0.28),
+    depth
+  );
 
-  // keep sky reflection as a secondary layer
-  waterRefl *= 0.38+0.42*fresnel;
+  // very subtle sky reflection
+  waterRefl *= 0.12+0.10*fresnel;
 
-  // blend strong water color with sky reflection
-  color.rgb *= waterBase*0.72;
-  color.rgb += waterRefl*0.28;
+  // tropical water dominates
+  color.rgb = mix(
+    color.rgb,
+    waterBase,
+    0.72
+  );
 
-  // stronger water transparency at grazing angles
+  // very subtle reflection
+  color.rgb += waterRefl*0.08;
+
+  // transparency
   color.a = mix(
     COLOR.a*NL_WATER_TRANSPARENCY,
     1.0,
