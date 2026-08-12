@@ -84,7 +84,7 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
 
   // dawn / sunset color mask
   float sunsetMask = clamp(
-    3.8*(FOG_COLOR.r-FOG_COLOR.b),
+    3.0*(FOG_COLOR.r-FOG_COLOR.b),
     0.0,
     1.0
   );
@@ -94,7 +94,7 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
   // soft final transition
   vol = smoothstep(0.0,0.32,vol);
 
-  return vol*1.45;
+  return vol*1.15;
 }
 
 #endif
