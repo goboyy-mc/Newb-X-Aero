@@ -116,12 +116,15 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     sky *= 1.0 + 20.0*source*(1.0-env.rainFactor);
     
     //sunset glow
-    float sunsetGlow = max(0.0, 1.0-abs(env.dayFactor));
+    float sunsetGlow = max(0.0,1.0-abs(env.dayFactor));
     sunsetGlow *= sunsetGlow;
     sunsetGlow *= sunsetGlow;
-    float sunGlow = max(0.0, dot(env.sunDir, viewDir));
-    sunGlow = smoothstep(0.0, 0.8, sunGlow);
+
+    float sunGlow = max(0.0,dot(env.sunDir,viewDir));
+    sunGlow = smoothstep(0.25,0.85,sunGlow);
     sunGlow *= sunGlow;
+    sunGlow *= sunGlow;
+
     sky += skyCol.horizon*sunsetGlow*sunGlow*3.2;
   }
 
