@@ -1,4 +1,5 @@
 #ifndef CLOUDS_H
+#define CLOUDS_H
 
 #include "detection.h"
 #include "noise.h"
