@@ -162,10 +162,10 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 0.10           // [toggle] 0.4 dim ~ 4.0 very bright
-#define NL_AURORA_VELOCITY 0.015 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.030    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.08    // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA 1.5           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA_VELOCITY 0.012 // 0.0 static ~ 0.3 very fast
+#define NL_AURORA_SCALE 0.024    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_WIDTH 0.10    // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(1.0,0.0,1.0)
 #define NL_AURORA_COL2 vec3(0.0,1.0,0.0)
 
