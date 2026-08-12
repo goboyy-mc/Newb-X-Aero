@@ -42,7 +42,6 @@ float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 }
 
 float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float relativeDist, vec3 FOG_COLOR) {
-  // offset wPos (only works upto 16 blocks)
   vec3 offset = cPos-16.0*fract(worldPos*0.0625);
   offset = abs(2.0*fract(offset*0.0625)-1.0);
   offset = offset*offset*(3.0-2.0*offset);
@@ -55,44 +54,45 @@ float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float
 
   float mask = nrmof.x*nrmof.x;
 
-  // large soft rays
-  float ray1 = sin(4.2*u+0.95*diff);
-  float ray2 = sin(2.0*u-0.65*diff);
-  float ray3 = sin(7.0*u+1.4*diff);
+  // broad soft light pattern
+  float ray1 = 0.5+0.5*sin(2.4*u+0.75*diff);
+  float ray2 = 0.5+0.5*sin(1.15*u-0.45*diff);
 
-  ray1 *= ray1;
-  ray2 *= ray2;
-  ray3 *= ray3;
+  // combine wide patterns
+  float vol = mix(0.72,1.0,ray1);
+  vol *= mix(0.82,1.0,ray2);
 
-  float vol = 0.62*ray1+0.25*ray2+0.13*ray3;
+  // very soft variation
+  float fantasyGlow = 0.5+0.5*sin(
+    1.8*u+0.35*diff
+  );
 
-  // wide volumetric rays
-  vol = smoothstep(0.08,0.72,vol);
+  fantasyGlow = mix(0.88,1.12,fantasyGlow);
 
+  vol *= fantasyGlow;
+
+  // broad volumetric shape
+  vol = smoothstep(0.55,0.90,vol);
+
+  // atmospheric mask
   vol *= mask;
   vol *= uv1.y;
 
-  float distanceFade = smoothstep(0.05,1.0,relativeDist);
-  vol *= 0.55+0.45*distanceFade;
+  // stronger toward distance, but never becoming a hard beam
+  float distanceFade = smoothstep(0.0,1.0,relativeDist);
+  vol *= mix(0.70,1.0,distanceFade);
 
-  // dawn / sunset mask
+  // dawn / sunset color mask
   float sunsetMask = clamp(
     3.8*(FOG_COLOR.r-FOG_COLOR.b),
     0.0,
     1.0
   );
 
-  // subtle fantasy variation
-  float fantasyGlow = 0.5+0.5*sin(
-    2.5*u+0.5*diff
-  );
-
-  fantasyGlow = mix(0.82,1.18,fantasyGlow);
-
   vol *= sunsetMask;
-  vol *= fantasyGlow;
 
-  vol = smoothstep(0.0,0.20,vol);
+  // soft final transition
+  vol = smoothstep(0.0,0.32,vol);
 
   return vol*1.45;
 }
