@@ -169,10 +169,9 @@ vec4 renderCloudsRounded(
   deltaP /= -stepsf;
 
   // LMI-style cloud displacement
-  pos += deltaP*hash(
-    vPos.xz+time
-  );
-
+  pos += deltaP*rand(
+  vPos.xz+time
+);
   // alpha and vertical gradient
   vec2 d = vec2(
     0.0,
