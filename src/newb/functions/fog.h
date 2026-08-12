@@ -24,7 +24,7 @@ float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 
     layer = mix(0.78,1.18,layer);
 
-    fade += (1.0-fade)*mist*0.34*layer;
+    fade += (1.0-fade)*mist*0.20*layer;
 
     // stronger distant atmosphere
     float distanceFog = smoothstep(
@@ -33,7 +33,7 @@ float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
       relativeDist
     );
 
-    fade = max(fade,distanceFog*0.18);
+    fade = max(fade,distanceFog*0.12);
 
     return NL_FOG*clamp(fade,0.0,1.0);
   #else
