@@ -3,13 +3,39 @@
 
 float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
   #ifdef NL_FOG
-    float fade = smoothstep(FOG_CONTROL.x, FOG_CONTROL.y, relativeDist);
+    float fade = smoothstep(FOG_CONTROL.x,FOG_CONTROL.y,relativeDist);
 
-    // misty effect
-    float density = NL_MIST_DENSITY*(17.0 - 16.0*FOG_COLOR.g);
-    fade += (1.0-fade)*(0.22-0.22*exp(-relativeDist*relativeDist*density));
+    // volumetric mist
+    float density = NL_MIST_DENSITY*(20.0-18.0*FOG_COLOR.g);
 
-    return NL_FOG * fade;
+    float mist = 1.0-exp(
+      -relativeDist*relativeDist*density
+    );
+
+    // thicker atmospheric fog
+    mist = smoothstep(0.0,0.82,mist);
+
+    // soft layered fog
+    float layer = 0.5+0.5*sin(
+      relativeDist*2.2+
+      FOG_COLOR.r*4.0+
+      FOG_COLOR.b*2.0
+    );
+
+    layer = mix(0.78,1.18,layer);
+
+    fade += (1.0-fade)*mist*0.34*layer;
+
+    // stronger distant atmosphere
+    float distanceFog = smoothstep(
+      FOG_CONTROL.x*0.55,
+      FOG_CONTROL.y,
+      relativeDist
+    );
+
+    fade = max(fade,distanceFog*0.18);
+
+    return NL_FOG*clamp(fade,0.0,1.0);
   #else
     return 0.0;
   #endif
@@ -17,27 +43,58 @@ float nlRenderFogFade(float relativeDist, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 
 float nlRenderGodRayIntensity(vec3 cPos, vec3 worldPos, float t, vec2 uv1, float relativeDist, vec3 FOG_COLOR) {
   // offset wPos (only works upto 16 blocks)
-  vec3 offset = cPos - 16.0*fract(worldPos*0.0625);
+  vec3 offset = cPos-16.0*fract(worldPos*0.0625);
   offset = abs(2.0*fract(offset*0.0625)-1.0);
   offset = offset*offset*(3.0-2.0*offset);
-  //offset = 0.5 + 0.5*cos(offset*0.392699082);
 
-  //vec3 ofPos = wPos+offset;
   vec3 nrmof = normalize(worldPos);
 
   float u = nrmof.z/length(nrmof.zy);
-  float diff = dot(offset,vec3(0.08,0.18,1.0)) + 0.055*t;
+
+  float diff = dot(offset,vec3(0.06,0.14,0.85))+0.035*t;
+
   float mask = nrmof.x*nrmof.x;
 
-  float vol = sin(6.2*u + 1.35*diff)*sin(2.8*u + diff);
-  vol *= vol*mask*uv1.y*(1.0-mask*mask);
-  vol *= relativeDist*relativeDist*0.85;
+  // large soft rays
+  float ray1 = sin(4.2*u+0.95*diff);
+  float ray2 = sin(2.0*u-0.65*diff);
+  float ray3 = sin(7.0*u+1.4*diff);
 
-  // dawn/dusk mask
-  vol *= clamp(2.8*(FOG_COLOR.r-FOG_COLOR.b), 0.0, 1.0);
+  ray1 *= ray1;
+  ray2 *= ray2;
+  ray3 *= ray3;
 
-  vol = smoothstep(0.0, 0.12, vol);
-  return vol;
+  float vol = 0.62*ray1+0.25*ray2+0.13*ray3;
+
+  // wide volumetric rays
+  vol = smoothstep(0.08,0.72,vol);
+
+  vol *= mask;
+  vol *= uv1.y;
+
+  float distanceFade = smoothstep(0.05,1.0,relativeDist);
+  vol *= 0.55+0.45*distanceFade;
+
+  // dawn / sunset mask
+  float sunsetMask = clamp(
+    3.8*(FOG_COLOR.r-FOG_COLOR.b),
+    0.0,
+    1.0
+  );
+
+  // subtle fantasy variation
+  float fantasyGlow = 0.5+0.5*sin(
+    2.5*u+0.5*diff
+  );
+
+  fantasyGlow = mix(0.82,1.18,fantasyGlow);
+
+  vol *= sunsetMask;
+  vol *= fantasyGlow;
+
+  vol = smoothstep(0.0,0.20,vol);
+
+  return vol*1.45;
 }
 
 #endif
