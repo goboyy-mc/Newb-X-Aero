@@ -70,9 +70,11 @@ vec4 renderCloudsSimple(nl_skycolor skycol, vec3 pos, highp float t, float rain)
 // rounded clouds
 
 // rounded clouds 3D density map
-float cloudDf(vec3 pos, float rain, vec2 boxiness) {
+float cloudDf(vec3 pos,float rain,vec2 boxiness) {
   boxiness *= 0.999;
+
   vec2 p0 = floor(pos.xz);
+
   vec2 u = max(
     (pos.xz-p0-boxiness.x)/(1.0-boxiness.x),
     0.0
@@ -87,6 +89,7 @@ float cloudDf(vec3 pos, float rain, vec2 boxiness) {
     rand(p0+vec2(0.0,1.0))
   );
 
+  // LMI rain transition
   r = smoothstep(
     0.1001+0.2*rain,
     0.1+0.2*rain*rain,
@@ -99,14 +102,19 @@ float cloudDf(vec3 pos, float rain, vec2 boxiness) {
     u.y
   );
 
-  // round y
+  // rounded vertical profile
   n *= 1.0-1.5*smoothstep(
     boxiness.y,
     2.0-boxiness.y,
     2.0*abs(pos.y-0.5)
   );
 
-  n = max(1.18*(n-0.18),0.0);
+  // LMI cloud shaping
+  n = max(
+    1.25*(n-0.2),
+    0.0
+  );
+
   n *= n*(3.0-2.0*n);
 
   return n;
@@ -127,7 +135,8 @@ vec4 renderCloudsRounded(
     const float density,
     const vec2 boxiness
 ) {
-  float height = 6.3*mix(
+  // LMI rounded cloud height
+  float height = 9.0*mix(
     thickness,
     thickness_rain,
     rain
@@ -137,24 +146,38 @@ vec4 renderCloudsRounded(
 
   // scaled ray offset
   vec3 deltaP;
+
   deltaP.y = 1.0;
-  deltaP.xz = height*scale*vDir.xz/
+
+  deltaP.xz =
+    height*scale*vDir.xz/
     (0.02+0.98*abs(vDir.y));
 
-  // local cloud pos
+  // local cloud position
   vec3 pos;
+
   pos.y = 0.0;
+
   pos.xz = scale*(
     vPos.xz+
-    vec2(1.0,0.5)*(time*speed)
+    vec2(1.0,0.5)*
+    (time*speed)
   );
 
   pos += deltaP;
 
   deltaP /= -stepsf;
 
-  // alpha, gradient
-  vec2 d = vec2(0.0,1.0);
+  // LMI-style cloud displacement
+  pos += deltaP*hash(
+    vPos.xz+time
+  );
+
+  // alpha and vertical gradient
+  vec2 d = vec2(
+    0.0,
+    0.5
+  );
 
   for (int i=1; i<=steps; i++) {
     float m = cloudDf(
@@ -164,24 +187,32 @@ vec4 renderCloudsRounded(
     );
 
     d.x += m;
-    d.y = mix(d.y,pos.y,m);
+
+    d.y = mix(
+      d.y,
+      pos.y,
+      m
+    );
 
     pos += deltaP;
   }
 
+  // LMI alpha shaping
   d.x *= smoothstep(
-    0.03,
-    0.1,
+    0.7,
+    1.0,
     d.x
   );
 
-  d.x /= (stepsf/density)+d.x;
+  d.x /= (
+    stepsf/density
+  )+d.x;
 
   if (vPos.y<0.0) {
     d.y = 1.0-d.y;
   }
 
-  // soft blue-white cloud base
+  // Aetheris soft cloud color
   vec3 cloudBase = mix(
     horizonCol,
     zenithCol,
@@ -201,10 +232,20 @@ vec4 renderCloudsRounded(
 
   col.rgb *= 1.0-0.68*rain;
 
-  // night cloud darkening
+  // ==========================================
+  // NIGHT CLOUD DARKENING
+  // ==========================================
+
   float cloudLight = dot(
-    0.5*(horizonCol+zenithCol),
-    vec3(0.299,0.587,0.114)
+    0.5*(
+      horizonCol+
+      zenithCol
+    ),
+    vec3(
+      0.299,
+      0.587,
+      0.114
+    )
   );
 
   float nightMask = 1.0-smoothstep(
@@ -213,13 +254,14 @@ vec4 renderCloudsRounded(
     cloudLight
   );
 
+  // darken clouds at night
   col.rgb *= mix(
     1.0,
     0.20,
     nightMask
   );
 
-  // soft moonlight on upper cloud surface
+  // subtle moonlight
   float moonLight = smoothstep(
     0.15,
     0.85,
@@ -230,7 +272,10 @@ vec4 renderCloudsRounded(
     0.012,
     0.020,
     0.050
-  )*nightMask*moonLight*col.a;
+  )*
+  nightMask*
+  moonLight*
+  col.a;
 
   return col;
 }
