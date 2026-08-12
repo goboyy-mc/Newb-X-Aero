@@ -66,8 +66,28 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.26*NL_WATER_TINT*(1.0-0.75*fresnel);
-  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
+    // strong water body color
+  vec3 waterBase = NL_WATER_TINT;
+
+  // underwater depth tint
+  float depth = clamp(1.0-cosR,0.0,1.0);
+  depth *= depth;
+
+  waterBase *= 0.72+0.28*depth;
+
+  // keep sky reflection as a secondary layer
+  waterRefl *= 0.38+0.42*fresnel;
+
+  // blend strong water color with sky reflection
+  color.rgb *= waterBase*0.72;
+  color.rgb += waterRefl*0.28;
+
+  // stronger water transparency at grazing angles
+  color.a = mix(
+    COLOR.a*NL_WATER_TRANSPARENCY,
+    1.0,
+    opacity*opacity
+  );
 
   #ifdef NL_WATER_WAVE
     if (camDist < 14.0) {
