@@ -125,7 +125,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     sunGlow *= sunGlow;
     sunGlow *= sunGlow;
 
-    sky += skyCol.horizon*sunsetGlow*sunGlow*3.2;
+    sky += skyCol.horizon*sunsetGlow*sunGlow*2.2;
   }
 
   #ifdef NL_RAINBOW
