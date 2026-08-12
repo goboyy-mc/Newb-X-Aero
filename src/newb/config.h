@@ -112,14 +112,14 @@
 #define NL_WATER_TEX_OPACITY 0.12  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.10,0.74,0.68)
+#define NL_WATER_TINT vec3(0.0,0.08,0.08)
 
 /* Underwater */
-#define NL_UNDERWATER_BRIGHTNESS 1.55         // 0.0 dark ~ 3.0 bright
+#define NL_UNDERWATER_BRIGHTNESS 1.65         // 0.0 dark ~ 3.0 bright
 #define NL_CAUSTIC_INTENSITY 2.35             // 0.5 weak ~ 5.0 bright
 #define NL_UNDERWATER_WAVE 0.06               // [toggle] 0.02 subtle ~ 0.6 trippy
 #define NL_UNDERWATER_STREAKS 1.35            // [toggle] 0.8 subtle - 2.0 bright streaks from top
-#define NL_UNDERWATER_TINT vec3(0.18,0.72,0.74) // fog tint color when underwater
+#define NL_UNDERWATER_TINT vec3(0.,0.18,0.18) // fog tint color when underwater
 
 /* Cloud type */
 #define NL_CLOUD_TYPE 2 // 0:vanilla, 1:soft, 2:rounded, 3:realistic
@@ -162,12 +162,12 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 1.5           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 3.5           // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.012 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.024    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_SCALE 0.020    // 0.002 large ~ 0.4 tiny
 #define NL_AURORA_WIDTH 0.10    // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(1.0,0.0,1.0)
-#define NL_AURORA_COL2 vec3(0.0,1.0,0.0)
+#define NL_AURORA_COL2 vec3(0.0,1.0,1.0)
 
 #define NL_CLOUD_AURORA_REFLECTION // [toggle] simple clouds/aurora reflection
 
