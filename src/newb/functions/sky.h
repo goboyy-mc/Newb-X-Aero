@@ -45,10 +45,10 @@ nl_skycolor nlOverworldSkyColors(nl_environment env) {
   s.horizon = mix(NL_DAY_HORIZON_COL, NL_NIGHT_HORIZON_COL*f, nightFactor);
   s.horizonEdge = mix(NL_DAY_EDGE_COL, NL_NIGHT_EDGE_COL*f, nightFactor);
 
-    float dawnFactor = 1.0-env.dayFactor*env.dayFactor;
-    dawnFactor = dawnFactor*dawnFactor;
-    dawnFactor *= dawnFactor;
-    dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
+  float dawnFactor = 1.0-env.dayFactor*env.dayFactor; 
+  dawnFactor = dawnFactor*dawnFactor; 
+  dawnFactor *= dawnFactor;
+  dawnFactor *= mix(1.0, dawnFactor*dawnFactor, nightFactor);
   s.zenith = mix(s.zenith, NL_DAWN_ZENITH_COL, dawnFactor);
   s.horizon = mix(s.horizon, NL_DAWN_HORIZON_COL, dawnFactor);
   s.horizonEdge = mix(s.horizonEdge, NL_DAWN_EDGE_COL, dawnFactor);
@@ -122,7 +122,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float sunGlow = max(0.0, dot(env.sunDir, viewDir));
     sunGlow = smoothstep(0.0, 0.8, sunGlow);
     sunGlow *= sunGlow;
-    sky += skyCol.horizon*sunsetGlow*sunGlow*1.8;
+    sky += skyCol.horizon*sunsetGlow*sunGlow*3.2;
   }
 
   #ifdef NL_RAINBOW
@@ -138,9 +138,9 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
 // Author: devendrn, Title: Simple blackhole, License: CC BY-SA 4.0
 
-  #define NL_BH_COL_LOW  vec3(0.05, 0.01, 0.10)
-  #define NL_BH_COL_HIGH vec3(0.72, 0.16, 0.95)
-  #define NL_BH_DIST 1.0
+  #define NL_BH_COL_LOW  vec3(0.035,0.008,0.075)
+  #define NL_BH_COL_HIGH vec3(0.52,0.10,0.72)
+  #define NL_BH_DIST 1.35
   #define NL_BH_SPEED 0.18
 
   vec4 renderBlackhole(vec3 vdir, float t) {
@@ -208,14 +208,14 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
 
   // PREMIUM AERO COLORING (BIRU KEUNGUAN MEWAH):
   // 1. Tambahan kilauan nebula utama: Perpaduan Ungu Nebula yang pekat dan Biru Elektrik Kosmik
-  vec3 nebulaColor = vec3(0.48, 0.10, 0.82);
-  vec3 auroraCore  = vec3(0.82, 0.20, 1.05);
+  vec3 nebulaColor = vec3(0.32,0.06,0.58);
+  vec3 auroraCore  = vec3(0.58,0.12,0.78);
 
   // 2. Efek Cahaya Menyala (Glow Effect) pada pusaran awan langit The End
   sky += (0.12*streaks + 2.5*g*g*g + 1.2*h*h*h) * mix(nebulaColor, auroraCore, n2);
 
   // 3. Efek Spektrum Aurora: Memberikan bias warna pelangi tipis (cyan-violet) di celah-celah kegelapan
-  sky += 0.20*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.65,0.22,0.95);
+  sky += 0.12*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.50,0.16,0.78);
 
   vec4 bh = renderBlackhole(viewDir, t);
   sky += bh.rgb;
