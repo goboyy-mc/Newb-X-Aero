@@ -33,14 +33,14 @@
 #define NL_EXPOSURE 1.1              // [toggle] 0.5 dark ~ 3.0 bright
 #define NL_SATURATION 1.15            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
-#define NL_TINT_LOW  vec3(1.0,1.0,1.0) // color tint for dark tone
-#define NL_TINT_HIGH vec3(1.0,1.0,1.0) // color tint for light tone
+#define NL_TINT_LOW  vec3(1.0,1.0,1.2) // color tint for dark tone
+#define NL_TINT_HIGH vec3(1.0,1.0,1.2) // color tint for light tone
 
 /* Lighting */
 #define NL_SUNLIGHT_INTENSITY   3.45  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.5  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
-#define NL_MIN_LIGHTING_BOOST   2.1  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
+#define NL_MIN_LIGHTING_BOOST   2.2  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
 #define NL_BLINKING_TORCH  // [toggle] flickering light
 #define NL_CLOUD_SHADOW      // [toggle] cloud shadow (simple clouds only)
 
@@ -94,9 +94,9 @@
 
 /* Ore glow intensity */
 #define NL_GLOW_TEX 2.55           // 0.4 weak ~ 8.0 bright
-#define NL_GLOW_SHIMMER 0.55       // [toggle] 0.1 subtle ~ 1.0 100% shimmer
+#define NL_GLOW_SHIMMER 0.8       // [toggle] 0.1 subtle ~ 1.0 100% shimmer
 #define NL_GLOW_SHIMMER_SPEED 0.75 // 0.5 slow - 2.0 fast
-//#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
+#define NL_GLOW_LEAK 0.6        // [toggle] 0.08 subtle ~ 1.0 100% brightness of NL_GLOW_TEX
 
 /* Waving */
 #define NL_PLANTS_WAVE 0.05    // [toggle] 0.02 gentle ~ 0.4 violent
@@ -112,7 +112,7 @@
 #define NL_WATER_TEX_OPACITY 0.12  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.0,0.08,0.08)
+#define NL_WATER_TINT vec3(0.0,0.08,0.1)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.65         // 0.0 dark ~ 3.0 bright
@@ -183,7 +183,7 @@
 #define NL_GALAXY_DAY_VISIBILITY 0.0    // 0.0 invisible - 1.0 visible
 
 /* Chunk loading slide in animation */
-//#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
+#define NL_CHUNK_LOAD_ANIM 100.0 // [toggle] -600.0 fall from top ~ 600.0 rise from bottom
 
 /* Sun/Moon */
 #define NL_SUN_SIZE  1.0           // 0.3 tiny ~ 4.0 massive
@@ -191,15 +191,15 @@
 #define NL_SUN_PATH_YAW    20.0 //
 #define NL_MOON_PATH_YAW   20.0 //
 #define NL_SUN_PATH_TILT   32.0 //
-#define NL_MOON_PATH_TILT 32.0 //
+#define NL_MOON_PATH_TILT  32.0 //
 #define NL_SUN_TILT        45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 0.35 // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 0.8 // [toggle] 0.1 subtle ~ 0.8 strong
 
 /* Sky reflection */
-#define NL_GROUND_REFL 0.3       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
+//#define NL_GROUND_REFL 0.3       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
 #define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining
 #define NL_GROUND_RAIN_PUDDLES 0.7 // 0.0 no puddles ~ 1.0 puddles
 
@@ -209,8 +209,8 @@
 
 /* Weather particles */
 #define NL_WEATHER_SPECK 0.8         // [toggle] 0.0 vanilla texture ~ 1.0 soft speck
-#define NL_WEATHER_RAIN_SLANT 3.2    // 1.0 minimal ~ 8.0 violent
-#define NL_WEATHER_PARTICLE_SIZE 0.8 // 0.5 tiny ~ 4.0 large
+#define NL_WEATHER_RAIN_SLANT 2.0    // 1.0 minimal ~ 8.0 violent
+#define NL_WEATHER_PARTICLE_SIZE 0.7 // 0.5 tiny ~ 4.0 large
 
 /* Lava effects */
 #define NL_LAVA_NOISE            // [toggle] darken lava in certain regions
@@ -228,20 +228,6 @@
   Subpack names and flags are inside `pack_config.toml`.
   Build tool will enable corresponding flags when compiling.
 */
-
-#ifdef LITE
-  #define NO_WAVE
-  #undef NL_GLOW_SHIMMER
-  #undef NL_LAVA_NOISE
-  #undef NL_WEATHER_SPECK
-  #undef NL_SHOOTING_STAR
-  #undef NL_CLOUD_AURORA_REFLECTION
-  #undef NL_UNDERWATER_STREAKS
-  #undef NL_RAIN_MIST_OPACITY
-  #undef NL_CLOUDY_FOG
-  #undef NL_ENTITY_EDGE_HIGHLIGHT
-#endif
-
 #ifdef NO_WAVE_NO_FOG
   #define NO_WAVE
   #define NO_FOG
@@ -259,20 +245,8 @@
   #undef NL_RAIN_MIST_OPACITY
 #endif
 
-#ifdef CHUNK_ANIM
-  #define NL_CHUNK_LOAD_ANIM 100.0
-#endif
-
-#ifdef ROUNDED_CLOUDS
-  #undef NL_CLOUD_TYPE
-  #define NL_CLOUD_TYPE 2
-  #undef NL_CLOUD_SHADOW // TODO: Cloud shadow for rounded, realistic clouds
-#endif
-
-#ifdef BOX_CLOUDS
-  #undef NL_CLOUD_TYPE
-  #define NL_CLOUD_TYPE 0
-  #undef NL_CLOUD_SHADOW
+#ifdef NO_CHUNK_ANIM
+  #undef NL_CHUNK_LOAD_ANIM
 #endif
 
 #ifdef REALISTIC_CLOUDS
